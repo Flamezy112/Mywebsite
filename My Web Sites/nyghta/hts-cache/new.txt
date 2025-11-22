@@ -1,3 +1,0 @@
-date	size'/'remotesize	flags(request:Update,Range state:File response:Modified,Chunked,gZipped)	statuscode	status ('servermsg')	MIME	Etag|Date	URL	localfile	(from URL)
-16:11:02	0/0	---M--	308	error ('Permanent%20Redirect')	text/html	date:Sat,%2022%20Nov%202025%2016:11:00%20GMT	http://nyghta.com/robots.txt		(from )
-16:11:02	0/0	---M--	308	error ('Permanent%20Redirect')	text/html	date:Sat,%2022%20Nov%202025%2016:11:01%20GMT	http://nyghta.com/	C:/My%20Web%20Sites/nyghta/nyghta.com/index.html	(from )
