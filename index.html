@@ -601,31 +601,131 @@
             transform: translateX(0);
         }
 
+        /* ==================== FEATURED PROJECTS ==================== */
+        .featured-projects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .featured-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .featured-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(220, 38, 38, 0.15);
+        }
+
+        .featured-video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.2), rgba(20, 20, 20, 0.9));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-video .placeholder {
+            color: var(--text-gray);
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .featured-video .placeholder .placeholder-icon {
+            width: 50px;
+            height: 50px;
+            stroke: var(--text-gray);
+            opacity: 0.5;
+        }
+
+        .featured-content {
+            padding: 25px 30px 30px;
+        }
+
+        .featured-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .featured-description {
+            color: var(--text-gray);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .featured-content .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .featured-content .btn i {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Snippets Header */
+        .snippets-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .snippets-header h3 {
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .snippets-header p {
+            color: var(--text-gray);
+            font-size: 16px;
+        }
+
         /* ==================== VIDEO PROJECTS GRID ==================== */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
+            gap: 20px;
         }
 
         .project-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s ease;
         }
 
         .project-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             border-color: var(--primary-red);
-            box-shadow: 0 10px 40px rgba(220, 38, 38, 0.2);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.15);
         }
 
         .project-video {
             width: 100%;
             aspect-ratio: 16 / 9;
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.2), rgba(20, 20, 20, 0.9));
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.15), rgba(20, 20, 20, 0.9));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -641,23 +741,23 @@
 
         .project-video .placeholder {
             color: var(--text-gray);
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .project-video .placeholder .placeholder-icon {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             stroke: var(--text-gray);
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         .project-title {
-            padding: 18px 20px;
-            font-size: 16px;
+            padding: 14px 16px;
+            font-size: 14px;
             font-weight: 500;
             text-align: center;
             border-top: 1px solid var(--border-color);
@@ -953,6 +1053,10 @@
             .services-grid {
                 grid-template-columns: 1fr;
             }
+
+            .featured-projects {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1018,6 +1122,23 @@
             .projects-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
+            }
+
+            .featured-projects {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .featured-content {
+                padding: 20px;
+            }
+
+            .featured-title {
+                font-size: 20px;
+            }
+
+            .snippets-header h3 {
+                font-size: 22px;
             }
 
             .services-grid,
@@ -1151,22 +1272,64 @@
         </div>
     </section>
 
-    <!-- Projects Section - Video Grid -->
+    <!-- Projects Section -->
     <section id="work">
         <div class="container">
             <div class="section-header">
                 <div class="section-badge">My Work</div>
-                <h2 class="section-title">Systems I've Built</h2>
-                <p class="section-description">Video showcases of my scripting work in action</p>
+                <h2 class="section-title">Games & Systems I've Built</h2>
+                <p class="section-description">Full game showcases and system snippets</p>
             </div>
+
+            <!-- Featured Games -->
+            <div class="featured-projects">
+                <div class="featured-card scroll-fade">
+                    <div class="featured-video">
+                        <!-- Replace with: <video src="videos/game1-showcase.mp4" muted loop playsinline></video> -->
+                        <div class="placeholder">
+                            <i data-lucide="video" class="placeholder-icon"></i>
+                            <span>Game Video Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="featured-content">
+                        <h3 class="featured-title">Game Name Here</h3>
+                        <p class="featured-description">Brief description of the game - what it's about, what systems you built, player count, etc.</p>
+                        <a href="https://www.roblox.com/games/GAMEID" target="_blank" class="btn btn-primary">
+                            <i data-lucide="play"></i> Play on Roblox
+                        </a>
+                    </div>
+                </div>
+
+                <div class="featured-card scroll-fade">
+                    <div class="featured-video">
+                        <!-- Replace with: <video src="videos/game2-showcase.mp4" muted loop playsinline></video> -->
+                        <div class="placeholder">
+                            <i data-lucide="video" class="placeholder-icon"></i>
+                            <span>Game Video Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="featured-content">
+                        <h3 class="featured-title">Game Name Here</h3>
+                        <p class="featured-description">Brief description of the game - what it's about, what systems you built, player count, etc.</p>
+                        <a href="https://www.roblox.com/games/GAMEID" target="_blank" class="btn btn-primary">
+                            <i data-lucide="play"></i> Play on Roblox
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Snippets -->
+            <div class="snippets-header">
+                <h3>System Snippets</h3>
+                <p>Quick looks at individual systems and mechanics</p>
+            </div>
+
             <div class="projects-grid">
-                <!-- Row 1 -->
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <!-- Replace with: <video src="videos/round-system.mp4" muted loop playsinline></video> -->
                         <div class="placeholder">
                             <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
                         </div>
                     </div>
                     <div class="project-title">Round System</div>
@@ -1175,27 +1338,22 @@
                     <div class="project-video">
                         <div class="placeholder">
                             <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
                         </div>
                     </div>
-                    <div class="project-title">Camera Angle System</div>
+                    <div class="project-title">Camera System</div>
                 </div>
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
                             <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
                         </div>
                     </div>
-                    <div class="project-title">Data Saving System</div>
+                    <div class="project-title">Data Saving</div>
                 </div>
-
-                <!-- Row 2 -->
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
                             <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
                         </div>
                     </div>
                     <div class="project-title">Inventory System</div>
@@ -1204,7 +1362,6 @@
                     <div class="project-video">
                         <div class="placeholder">
                             <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
                         </div>
                     </div>
                     <div class="project-title">UI Animations</div>
@@ -1213,68 +1370,9 @@
                     <div class="project-video">
                         <div class="placeholder">
                             <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
-                        </div>
-                    </div>
-                    <div class="project-title">NPC Dialogue System</div>
-                </div>
-
-                <!-- Row 3 -->
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <div class="placeholder">
-                            <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
                         </div>
                     </div>
                     <div class="project-title">Shop System</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <div class="placeholder">
-                            <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
-                        </div>
-                    </div>
-                    <div class="project-title">Placement System</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <div class="placeholder">
-                            <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
-                        </div>
-                    </div>
-                    <div class="project-title">Progression System</div>
-                </div>
-
-                <!-- Row 4 -->
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <div class="placeholder">
-                            <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
-                        </div>
-                    </div>
-                    <div class="project-title">Stealing Mechanics</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <div class="placeholder">
-                            <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
-                        </div>
-                    </div>
-                    <div class="project-title">Accessory System</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <div class="placeholder">
-                            <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
-                        </div>
-                    </div>
-                    <div class="project-title">Event System</div>
                 </div>
             </div>
         </div>
@@ -1596,8 +1694,8 @@
             });
         }, { threshold: 0.5 });
 
-        // Observe all videos
-        document.querySelectorAll('.project-video video').forEach(video => {
+        // Observe all videos (featured and snippets)
+        document.querySelectorAll('.project-video video, .featured-video video').forEach(video => {
             videoObserver.observe(video);
         });
 
