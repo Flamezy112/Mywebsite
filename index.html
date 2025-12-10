@@ -230,6 +230,35 @@
             gap: 10px;
         }
 
+        .tech-item i {
+            width: 18px;
+            height: 18px;
+            stroke: var(--primary-red);
+        }
+
+        /* Lucide Icon Styles */
+        .badge-icon {
+            width: 16px;
+            height: 16px;
+            stroke: var(--primary-red);
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+
+        .service-icon i,
+        .benefit-icon i,
+        .pricing-icon i {
+            width: 28px;
+            height: 28px;
+            stroke: var(--primary-red);
+        }
+
+        .social-link i {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -504,8 +533,10 @@
             gap: 10px;
         }
 
-        .project-video .placeholder-icon {
-            font-size: 40px;
+        .project-video .placeholder .placeholder-icon {
+            width: 40px;
+            height: 40px;
+            stroke: var(--text-gray);
             opacity: 0.5;
         }
 
@@ -645,36 +676,40 @@
         .pricing-name {
             font-size: 24px;
             font-weight: 500;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .pricing-price {
-            font-size: 35px;
-            font-weight: 500;
-            margin-bottom: 10px;
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--text-white), var(--primary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .pricing-period {
+        .pricing-description {
             color: var(--text-gray);
-            margin-bottom: 30px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 15px;
         }
 
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-
-        .pricing-features li {
-            padding: 10px 0;
+        .pricing-tags {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 30px;
         }
 
-        .pricing-features li:before {
-            content: "✓";
-            color: var(--primary-red);
-            font-weight: bold;
+        .pricing-tag {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-gray);
         }
 
         /* FAQ Section */
@@ -944,7 +979,7 @@
         <div class="smoke-layer smoke-top"></div>
         
         <div class="container">
-            <div class="badge">✨ Currently Available For Work</div>
+            <div class="badge"><i data-lucide="sparkles" class="badge-icon"></i> Currently Available For Work</div>
             <h1>Your Scripts, Perfected</h1>
             <p>Professional Roblox Lua scripter delivering high-quality, modular scripts for your games — from full-stack development to specialized systems.</p>
             <div class="cta-buttons">
@@ -953,16 +988,16 @@
             </div>
             <div class="tech-scroll">
                 <div class="tech-track">
-                    <div class="tech-item">🎮 Roblox Studio</div>
-                    <div class="tech-item">📜 Lua Scripting</div>
-                    <div class="tech-item">🗄️ DataStores</div>
-                    <div class="tech-item">⚔️ Combat Systems</div>
-                    <div class="tech-item">🎯 Modular Architecture</div>
-                    <div class="tech-item">🎮 Roblox Studio</div>
-                    <div class="tech-item">📜 Lua Scripting</div>
-                    <div class="tech-item">🗄️ DataStores</div>
-                    <div class="tech-item">⚔️ Combat Systems</div>
-                    <div class="tech-item">🎯 Modular Architecture</div>
+                    <div class="tech-item"><i data-lucide="gamepad-2"></i> Roblox Studio</div>
+                    <div class="tech-item"><i data-lucide="code"></i> Lua Scripting</div>
+                    <div class="tech-item"><i data-lucide="database"></i> DataStores</div>
+                    <div class="tech-item"><i data-lucide="swords"></i> Combat Systems</div>
+                    <div class="tech-item"><i data-lucide="boxes"></i> Modular Architecture</div>
+                    <div class="tech-item"><i data-lucide="gamepad-2"></i> Roblox Studio</div>
+                    <div class="tech-item"><i data-lucide="code"></i> Lua Scripting</div>
+                    <div class="tech-item"><i data-lucide="database"></i> DataStores</div>
+                    <div class="tech-item"><i data-lucide="swords"></i> Combat Systems</div>
+                    <div class="tech-item"><i data-lucide="boxes"></i> Modular Architecture</div>
                 </div>
             </div>
         </div>
@@ -971,7 +1006,7 @@
     <!-- Stats Section -->
     <section class="stats scroll-fade">
         <div class="container">
-            <h2>50+ Happy Clients, Millions of Players, 10+ Projects</h2>
+            <h2>5+ Years Experience — Clean, Modular Code — Fast Delivery</h2>
         </div>
     </section>
 
@@ -987,9 +1022,9 @@
                 <!-- Row 1 -->
                 <div class="project-card scroll-fade">
                     <div class="project-video">
-                        <!-- Replace with: <video src="your-video.mp4" autoplay muted loop playsinline></video> -->
+                        <!-- Replace with: <video src="videos/round-system.mp4" muted loop playsinline></video> -->
                         <div class="placeholder">
-                            <span class="placeholder-icon">🎬</span>
+                            <i data-lucide="video" class="placeholder-icon"></i>
                             <span>Video Coming Soon</span>
                         </div>
                     </div>
@@ -998,7 +1033,7 @@
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
-                            <span class="placeholder-icon">🎬</span>
+                            <i data-lucide="video" class="placeholder-icon"></i>
                             <span>Video Coming Soon</span>
                         </div>
                     </div>
@@ -1007,7 +1042,7 @@
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
-                            <span class="placeholder-icon">🎬</span>
+                            <i data-lucide="video" class="placeholder-icon"></i>
                             <span>Video Coming Soon</span>
                         </div>
                     </div>
@@ -1018,7 +1053,7 @@
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
-                            <span class="placeholder-icon">🎬</span>
+                            <i data-lucide="video" class="placeholder-icon"></i>
                             <span>Video Coming Soon</span>
                         </div>
                     </div>
@@ -1027,7 +1062,7 @@
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
-                            <span class="placeholder-icon">🎬</span>
+                            <i data-lucide="video" class="placeholder-icon"></i>
                             <span>Video Coming Soon</span>
                         </div>
                     </div>
@@ -1036,7 +1071,7 @@
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
-                            <span class="placeholder-icon">🎬</span>
+                            <i data-lucide="video" class="placeholder-icon"></i>
                             <span>Video Coming Soon</span>
                         </div>
                     </div>
@@ -1047,7 +1082,7 @@
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
-                            <span class="placeholder-icon">🎬</span>
+                            <i data-lucide="video" class="placeholder-icon"></i>
                             <span>Video Coming Soon</span>
                         </div>
                     </div>
@@ -1056,7 +1091,7 @@
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
-                            <span class="placeholder-icon">🎬</span>
+                            <i data-lucide="video" class="placeholder-icon"></i>
                             <span>Video Coming Soon</span>
                         </div>
                     </div>
@@ -1065,7 +1100,7 @@
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
-                            <span class="placeholder-icon">🎬</span>
+                            <i data-lucide="video" class="placeholder-icon"></i>
                             <span>Video Coming Soon</span>
                         </div>
                     </div>
@@ -1076,7 +1111,7 @@
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
-                            <span class="placeholder-icon">🎬</span>
+                            <i data-lucide="video" class="placeholder-icon"></i>
                             <span>Video Coming Soon</span>
                         </div>
                     </div>
@@ -1085,7 +1120,7 @@
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
-                            <span class="placeholder-icon">🎬</span>
+                            <i data-lucide="video" class="placeholder-icon"></i>
                             <span>Video Coming Soon</span>
                         </div>
                     </div>
@@ -1094,7 +1129,7 @@
                 <div class="project-card scroll-fade">
                     <div class="project-video">
                         <div class="placeholder">
-                            <span class="placeholder-icon">🎬</span>
+                            <i data-lucide="video" class="placeholder-icon"></i>
                             <span>Video Coming Soon</span>
                         </div>
                     </div>
@@ -1114,7 +1149,7 @@
             </div>
             <div class="services-grid">
                 <div class="service-card scroll-fade-left">
-                    <div class="service-icon">🎮</div>
+                    <div class="service-icon"><i data-lucide="gamepad-2"></i></div>
                     <h3 class="service-title">Core Gameplay Systems</h3>
                     <p class="service-description">Complete gameplay frameworks including round systems with timers, progression and leveling, automated spawning, plot management, leaderboards, and event-driven mechanics.</p>
                     <div class="service-tags">
@@ -1127,7 +1162,7 @@
                     </div>
                 </div>
                 <div class="service-card scroll-fade-right">
-                    <div class="service-icon">💾</div>
+                    <div class="service-icon"><i data-lucide="database"></i></div>
                     <h3 class="service-title">Data & Backend Systems</h3>
                     <p class="service-description">Robust data persistence with inventory systems, player data saving/loading, profile service integration, auto-save functionality, and secure server-client communication.</p>
                     <div class="service-tags">
@@ -1139,7 +1174,7 @@
                     </div>
                 </div>
                 <div class="service-card scroll-fade-left">
-                    <div class="service-icon">✨</div>
+                    <div class="service-icon"><i data-lucide="sparkles"></i></div>
                     <h3 class="service-title">UI & Player Experience</h3>
                     <p class="service-description">Advanced UI with smooth tweens, sound feedback, accessory equip systems, interactive buttons, and polished UX flows that make your game feel professional.</p>
                     <div class="service-tags">
@@ -1151,7 +1186,7 @@
                     </div>
                 </div>
                 <div class="service-card scroll-fade-right">
-                    <div class="service-icon">🎥</div>
+                    <div class="service-icon"><i data-lucide="camera"></i></div>
                     <h3 class="service-title">Camera & Visual Effects</h3>
                     <p class="service-description">Custom camera angles, cinematic movements, screen transitions, visual feedback systems, and polished effects that elevate your game's presentation.</p>
                     <div class="service-tags">
@@ -1163,7 +1198,7 @@
                     </div>
                 </div>
                 <div class="service-card scroll-fade-left">
-                    <div class="service-icon">🤖</div>
+                    <div class="service-icon"><i data-lucide="bot"></i></div>
                     <h3 class="service-title">NPC & World Interaction</h3>
                     <p class="service-description">NPC dialogue systems, shop mechanics for buying/selling, world triggers, placement systems, and interactive objects that bring your game world to life.</p>
                     <div class="service-tags">
@@ -1175,7 +1210,7 @@
                     </div>
                 </div>
                 <div class="service-card scroll-fade-right">
-                    <div class="service-icon">🔧</div>
+                    <div class="service-icon"><i data-lucide="wrench"></i></div>
                     <h3 class="service-title">Clean & Scalable Code</h3>
                     <p class="service-description">Modular architecture, optimized performance, proper documentation, and maintainable code structures that make future updates easy.</p>
                     <div class="service-tags">
@@ -1200,17 +1235,17 @@
             </div>
             <div class="benefits-grid">
                 <div class="benefit-card scroll-fade">
-                    <div class="benefit-icon">⚡</div>
+                    <div class="benefit-icon"><i data-lucide="zap"></i></div>
                     <h3 class="benefit-title">High Quality Code</h3>
                     <p class="benefit-description">Clean, efficient, and modular scripts that follow best practices. Every line of code is optimized for performance and maintainability with comprehensive documentation.</p>
                 </div>
                 <div class="benefit-card scroll-fade">
-                    <div class="benefit-icon">🚀</div>
+                    <div class="benefit-icon"><i data-lucide="rocket"></i></div>
                     <h3 class="benefit-title">Fast Delivery</h3>
                     <p class="benefit-description">Unlike other scripters, I work efficiently without compromising quality. Most projects delivered within agreed timelines with regular progress updates.</p>
                 </div>
                 <div class="benefit-card scroll-fade">
-                    <div class="benefit-icon">💬</div>
+                    <div class="benefit-icon"><i data-lucide="message-circle"></i></div>
                     <h3 class="benefit-title">Excellent Communication</h3>
                     <p class="benefit-description">Available for discussions and updates. Quick response times to answer questions or address concerns you may have throughout the development process.</p>
                 </div>
@@ -1223,53 +1258,43 @@
         <div class="container">
             <div class="section-header">
                 <div class="section-badge">Pricing</div>
-                <h2 class="section-title">Flexible Plans For Your Needs</h2>
-                <p class="section-description">Transparent pricing designed to fit your requirements</p>
+                <h2 class="section-title">Flexible Pricing For Any Project</h2>
+                <p class="section-description">Transparent rates based on scope and complexity</p>
             </div>
             <div class="pricing-grid">
                 <div class="pricing-card scroll-fade">
-                    <div class="pricing-icon">📝</div>
+                    <div class="pricing-icon"><i data-lucide="file-code"></i></div>
                     <h3 class="pricing-name">Simple Scripts</h3>
                     <div class="pricing-price">$50 USD+</div>
-                    <p class="pricing-period">Per Script</p>
-                    <ul class="pricing-features">
-                        <li>Tool/Weapon Scripts</li>
-                        <li>Basic Game Mechanics</li>
-                        <li>Simple Systems</li>
-                        <li>Fast Delivery</li>
-                        <li>Clean Code</li>
-                        <li>Basic Documentation</li>
-                    </ul>
+                    <p class="pricing-description">Quick, standalone scripts and basic mechanics. Perfect for single features or small additions to your game.</p>
+                    <div class="pricing-tags">
+                        <span class="pricing-tag">Fast Delivery</span>
+                        <span class="pricing-tag">Clean Code</span>
+                    </div>
                     <a href="#contact" class="btn btn-primary" style="width: 100%;">Get Started</a>
                 </div>
                 <div class="pricing-card scroll-fade">
-                    <div class="pricing-icon">🎯</div>
+                    <div class="pricing-icon"><i data-lucide="target"></i></div>
                     <h3 class="pricing-name">Advanced Systems</h3>
                     <div class="pricing-price">$200 USD+</div>
-                    <p class="pricing-period">Per System</p>
-                    <ul class="pricing-features">
-                        <li>Combat Systems</li>
-                        <li>DataStore Integration</li>
-                        <li>Complex Mechanics</li>
-                        <li>Modular Architecture</li>
-                        <li>Full Documentation</li>
-                        <li>Support & Updates</li>
-                    </ul>
+                    <p class="pricing-description">Complex, interconnected systems with modular architecture. Includes documentation and ongoing support.</p>
+                    <div class="pricing-tags">
+                        <span class="pricing-tag">Modular</span>
+                        <span class="pricing-tag">Documented</span>
+                        <span class="pricing-tag">Support</span>
+                    </div>
                     <a href="#contact" class="btn btn-primary" style="width: 100%;">Get Started</a>
                 </div>
                 <div class="pricing-card scroll-fade">
-                    <div class="pricing-icon">🎮</div>
+                    <div class="pricing-icon"><i data-lucide="gamepad-2"></i></div>
                     <h3 class="pricing-name">Full Game Development</h3>
                     <div class="pricing-price">$1500 USD+</div>
-                    <p class="pricing-period">Complete Game</p>
-                    <ul class="pricing-features">
-                        <li>Full-Stack Development</li>
-                        <li>All Game Systems</li>
-                        <li>Complete Backend</li>
-                        <li>Optimization Included</li>
-                        <li>Comprehensive Documentation</li>
-                        <li>Post-Launch Support</li>
-                    </ul>
+                    <p class="pricing-description">End-to-end game development from concept to launch. All systems, backend, optimization, and post-launch support included.</p>
+                    <div class="pricing-tags">
+                        <span class="pricing-tag">Full-Stack</span>
+                        <span class="pricing-tag">Optimized</span>
+                        <span class="pricing-tag">Post-Launch Support</span>
+                    </div>
                     <a href="#contact" class="btn btn-primary" style="width: 100%;">Get Started</a>
                 </div>
             </div>
@@ -1343,10 +1368,10 @@
             <p class="section-description">Ready to bring your game to life? Contact me on the platforms below:</p>
             <div class="social-links">
                 <a href="https://discord.com/users/flamezyot" class="social-link" target="_blank">
-                    <span>💬</span> Discord: flamezyot
+                    <i data-lucide="message-circle"></i> Discord: flamezyot
                 </a>
                 <a href="https://www.roblox.com/users/88431194/profile" class="social-link" target="_blank">
-                    <span>🎮</span> Roblox: fellipereis
+                    <i data-lucide="gamepad-2"></i> Roblox: fellipereis
                 </a>
             </div>
         </div>
@@ -1359,7 +1384,11 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
         // Create animated stars
         function createStars() {
             const container = document.getElementById('starsContainer');
@@ -1412,6 +1441,23 @@
         // Observe all scroll animation elements
         document.querySelectorAll('.scroll-fade, .scroll-fade-left, .scroll-fade-right, .section-header').forEach(el => {
             observer.observe(el);
+        });
+
+        // Video autoplay on scroll (play when visible, pause when not)
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (entry.isIntersecting) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        // Observe all videos
+        document.querySelectorAll('.project-video video').forEach(video => {
+            videoObserver.observe(video);
         });
 
         // FAQ Accordion
