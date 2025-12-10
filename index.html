@@ -457,56 +457,70 @@
             transform: translateX(0);
         }
 
-        /* Projects Grid */
+        /* ==================== VIDEO PROJECTS GRID ==================== */
         .projects-grid {
             display: grid;
-            gap: 40px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
         }
 
         .project-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 30px;
+            border-radius: 16px;
             overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             border-color: var(--primary-red);
+            box-shadow: 0 10px 40px rgba(220, 38, 38, 0.2);
         }
 
-        .project-image {
+        .project-video {
             width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, var(--primary-red), var(--primary-dark-red));
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.2), rgba(20, 20, 20, 0.9));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            font-weight: 500;
-            color: var(--text-white);
+            position: relative;
+            overflow: hidden;
         }
 
-        .project-content {
-            padding: 30px;
+        .project-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-video .placeholder {
+            color: var(--text-gray);
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project-video .placeholder-icon {
+            font-size: 40px;
+            opacity: 0.5;
         }
 
         .project-title {
-            font-size: 28px;
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-
-        .project-description {
-            color: var(--text-gray);
+            padding: 18px 20px;
             font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
         }
 
-        /* Services Grid */
+        /* Services Grid - Updated */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 30px;
         }
 
@@ -543,6 +557,22 @@
         .service-description {
             color: var(--text-gray);
             line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .service-tag {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-gray);
         }
 
         /* Benefits Grid */
@@ -739,6 +769,16 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             nav {
                 padding: 10px 15px;
@@ -799,6 +839,11 @@
                 width: 100%;
             }
 
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
             .services-grid,
             .benefits-grid,
             .pricing-grid {
@@ -810,11 +855,6 @@
             .benefit-card,
             .pricing-card {
                 padding: 30px 20px;
-            }
-
-            .project-image {
-                height: 250px;
-                font-size: 18px;
             }
 
             .social-links {
@@ -935,63 +975,216 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
+    <!-- Projects Section - Video Grid -->
     <section id="work">
         <div class="container">
             <div class="section-header">
-                <div class="section-badge">My Projects</div>
-                <h2 class="section-title">High Quality Scripts, Without Breaking The Bank</h2>
-                <p class="section-description">My latest work displayed - Add your projects below</p>
+                <div class="section-badge">My Work</div>
+                <h2 class="section-title">Systems I've Built</h2>
+                <p class="section-description">Video showcases of my scripting work in action</p>
             </div>
             <div class="projects-grid">
+                <!-- Row 1 -->
                 <div class="project-card scroll-fade">
-                    <div class="project-image">🎮 Your Project #1</div>
-                    <div class="project-content">
-                        <h3 class="project-title">Project Name - Full Stack Game</h3>
-                        <p class="project-description">Description of your project, what systems you built, technologies used, and the impact it had.</p>
+                    <div class="project-video">
+                        <!-- Replace with: <video src="your-video.mp4" autoplay muted loop playsinline></video> -->
+                        <div class="placeholder">
+                            <span class="placeholder-icon">🎬</span>
+                            <span>Video Coming Soon</span>
+                        </div>
                     </div>
+                    <div class="project-title">Round System</div>
                 </div>
                 <div class="project-card scroll-fade">
-                    <div class="project-image">⚔️ Your Project #2</div>
-                    <div class="project-content">
-                        <h3 class="project-title">Project Name - Combat System</h3>
-                        <p class="project-description">Description of your project, highlighting the complex systems and features you developed.</p>
+                    <div class="project-video">
+                        <div class="placeholder">
+                            <span class="placeholder-icon">🎬</span>
+                            <span>Video Coming Soon</span>
+                        </div>
                     </div>
+                    <div class="project-title">Camera Angle System</div>
                 </div>
                 <div class="project-card scroll-fade">
-                    <div class="project-image">🏆 Your Project #3</div>
-                    <div class="project-content">
-                        <h3 class="project-title">Project Name - DataStore System</h3>
-                        <p class="project-description">Description of your project, showcasing your expertise in data management and optimization.</p>
+                    <div class="project-video">
+                        <div class="placeholder">
+                            <span class="placeholder-icon">🎬</span>
+                            <span>Video Coming Soon</span>
+                        </div>
                     </div>
+                    <div class="project-title">Data Saving System</div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="project-card scroll-fade">
+                    <div class="project-video">
+                        <div class="placeholder">
+                            <span class="placeholder-icon">🎬</span>
+                            <span>Video Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="project-title">Inventory System</div>
+                </div>
+                <div class="project-card scroll-fade">
+                    <div class="project-video">
+                        <div class="placeholder">
+                            <span class="placeholder-icon">🎬</span>
+                            <span>Video Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="project-title">UI Animations</div>
+                </div>
+                <div class="project-card scroll-fade">
+                    <div class="project-video">
+                        <div class="placeholder">
+                            <span class="placeholder-icon">🎬</span>
+                            <span>Video Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="project-title">NPC Dialogue System</div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="project-card scroll-fade">
+                    <div class="project-video">
+                        <div class="placeholder">
+                            <span class="placeholder-icon">🎬</span>
+                            <span>Video Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="project-title">Shop System</div>
+                </div>
+                <div class="project-card scroll-fade">
+                    <div class="project-video">
+                        <div class="placeholder">
+                            <span class="placeholder-icon">🎬</span>
+                            <span>Video Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="project-title">Placement System</div>
+                </div>
+                <div class="project-card scroll-fade">
+                    <div class="project-video">
+                        <div class="placeholder">
+                            <span class="placeholder-icon">🎬</span>
+                            <span>Video Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="project-title">Progression System</div>
+                </div>
+
+                <!-- Row 4 -->
+                <div class="project-card scroll-fade">
+                    <div class="project-video">
+                        <div class="placeholder">
+                            <span class="placeholder-icon">🎬</span>
+                            <span>Video Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="project-title">Stealing Mechanics</div>
+                </div>
+                <div class="project-card scroll-fade">
+                    <div class="project-video">
+                        <div class="placeholder">
+                            <span class="placeholder-icon">🎬</span>
+                            <span>Video Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="project-title">Accessory System</div>
+                </div>
+                <div class="project-card scroll-fade">
+                    <div class="project-video">
+                        <div class="placeholder">
+                            <span class="placeholder-icon">🎬</span>
+                            <span>Video Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="project-title">Event System</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services Section - Updated with Real Skills -->
     <section id="services">
         <div class="container">
             <div class="section-header">
                 <div class="section-badge">Services</div>
-                <h2 class="section-title">All Your Scripting Needs, In One Place</h2>
-                <p class="section-description">From complete game development to specialized scripts, everything in one place.</p>
+                <h2 class="section-title">What I Can Build For You</h2>
+                <p class="section-description">Comprehensive scripting solutions for any Roblox project</p>
             </div>
             <div class="services-grid">
                 <div class="service-card scroll-fade-left">
                     <div class="service-icon">🎮</div>
-                    <h3 class="service-title">Full-Stack Game Development</h3>
-                    <p class="service-description">Complete game systems from scratch including gameplay mechanics, UI integration, progression systems, monetization, and more. Modular architecture for easy maintenance and scalability.</p>
-                </div>
-                <div class="service-card scroll-fade">
-                    <div class="service-icon">🗄️</div>
-                    <h3 class="service-title">DataStore & Backend Systems</h3>
-                    <p class="service-description">Robust data management solutions including player data persistence, inventory systems, profile service integration, auto-save systems, and data migration tools.</p>
+                    <h3 class="service-title">Core Gameplay Systems</h3>
+                    <p class="service-description">Complete gameplay frameworks including round systems with timers, progression and leveling, automated spawning, plot management, leaderboards, and event-driven mechanics.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">Round Systems</span>
+                        <span class="service-tag">Progression</span>
+                        <span class="service-tag">Spawning</span>
+                        <span class="service-tag">Leaderboards</span>
+                        <span class="service-tag">Events</span>
+                        <span class="service-tag">Stealing Mechanics</span>
+                    </div>
                 </div>
                 <div class="service-card scroll-fade-right">
-                    <div class="service-icon">⚔️</div>
-                    <h3 class="service-title">Combat & Weapon Systems</h3>
-                    <p class="service-description">Advanced combat mechanics, weapon handling, hitbox detection, damage systems, ability frameworks, and PvP/PvE systems with smooth animations and effects.</p>
+                    <div class="service-icon">💾</div>
+                    <h3 class="service-title">Data & Backend Systems</h3>
+                    <p class="service-description">Robust data persistence with inventory systems, player data saving/loading, profile service integration, auto-save functionality, and secure server-client communication.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">DataStores</span>
+                        <span class="service-tag">Inventory</span>
+                        <span class="service-tag">Save/Load</span>
+                        <span class="service-tag">Auto-Save</span>
+                        <span class="service-tag">Remotes</span>
+                    </div>
+                </div>
+                <div class="service-card scroll-fade-left">
+                    <div class="service-icon">✨</div>
+                    <h3 class="service-title">UI & Player Experience</h3>
+                    <p class="service-description">Advanced UI with smooth tweens, sound feedback, accessory equip systems, interactive buttons, and polished UX flows that make your game feel professional.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">UI Tweens</span>
+                        <span class="service-tag">Sound Design</span>
+                        <span class="service-tag">Accessory Systems</span>
+                        <span class="service-tag">Smooth UX</span>
+                        <span class="service-tag">Buttons & Actions</span>
+                    </div>
+                </div>
+                <div class="service-card scroll-fade-right">
+                    <div class="service-icon">🎥</div>
+                    <h3 class="service-title">Camera & Visual Effects</h3>
+                    <p class="service-description">Custom camera angles, cinematic movements, screen transitions, visual feedback systems, and polished effects that elevate your game's presentation.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">Custom Cameras</span>
+                        <span class="service-tag">Transitions</span>
+                        <span class="service-tag">Visual Effects</span>
+                        <span class="service-tag">Animations</span>
+                        <span class="service-tag">Polish</span>
+                    </div>
+                </div>
+                <div class="service-card scroll-fade-left">
+                    <div class="service-icon">🤖</div>
+                    <h3 class="service-title">NPC & World Interaction</h3>
+                    <p class="service-description">NPC dialogue systems, shop mechanics for buying/selling, world triggers, placement systems, and interactive objects that bring your game world to life.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">NPC Dialogue</span>
+                        <span class="service-tag">Shop Systems</span>
+                        <span class="service-tag">World Triggers</span>
+                        <span class="service-tag">Placement</span>
+                        <span class="service-tag">Interactions</span>
+                    </div>
+                </div>
+                <div class="service-card scroll-fade-right">
+                    <div class="service-icon">🔧</div>
+                    <h3 class="service-title">Clean & Scalable Code</h3>
+                    <p class="service-description">Modular architecture, optimized performance, proper documentation, and maintainable code structures that make future updates easy.</p>
+                    <div class="service-tags">
+                        <span class="service-tag">Modular Design</span>
+                        <span class="service-tag">Optimized</span>
+                        <span class="service-tag">Documented</span>
+                        <span class="service-tag">Scalable</span>
+                        <span class="service-tag">Maintainable</span>
+                    </div>
                 </div>
             </div>
         </div>
