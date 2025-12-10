@@ -660,10 +660,25 @@
             padding: 25px 30px 30px;
         }
 
+        .featured-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .game-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
         .featured-title {
             font-size: 24px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin: 0;
         }
 
         .featured-description {
@@ -1137,6 +1152,15 @@
                 font-size: 20px;
             }
 
+            .featured-header {
+                gap: 12px;
+            }
+
+            .game-icon {
+                width: 45px;
+                height: 45px;
+            }
+
             .snippets-header h3 {
                 font-size: 22px;
             }
@@ -1285,16 +1309,19 @@
             <div class="featured-projects">
                 <div class="featured-card scroll-fade">
                     <div class="featured-video">
-                        <!-- Replace with: <video src="videos/game1-showcase.mp4" muted loop playsinline></video> -->
+                        <!-- Replace with: <video src="videos/dress-a-brainrot.mp4" muted loop playsinline></video> -->
                         <div class="placeholder">
                             <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Game Video Coming Soon</span>
+                            <span>Video Coming Soon</span>
                         </div>
                     </div>
                     <div class="featured-content">
-                        <h3 class="featured-title">Game Name Here</h3>
-                        <p class="featured-description">Brief description of the game - what it's about, what systems you built, player count, etc.</p>
-                        <a href="https://www.roblox.com/games/GAMEID" target="_blank" class="btn btn-primary">
+                        <div class="featured-header">
+                            <img src="images/dress-a-brainrot-icon.png" alt="Dress A Brainrot" class="game-icon">
+                            <h3 class="featured-title">Dress A Brainrot</h3>
+                        </div>
+                        <p class="featured-description">Purchase lucky blocks to unlock rare items and customize your brainrot. Features rebirth system, progression mechanics, stealing, fighting, and much more.</p>
+                        <a href="https://www.roblox.com/games/98792997173843/Dress-a-Brainrot" target="_blank" class="btn btn-primary">
                             <i data-lucide="play"></i> Play on Roblox
                         </a>
                     </div>
@@ -1309,7 +1336,10 @@
                         </div>
                     </div>
                     <div class="featured-content">
-                        <h3 class="featured-title">Game Name Here</h3>
+                        <div class="featured-header">
+                            <img src="images/game2-icon.png" alt="Game Name" class="game-icon">
+                            <h3 class="featured-title">Game Name Here</h3>
+                        </div>
                         <p class="featured-description">Brief description of the game - what it's about, what systems you built, player count, etc.</p>
                         <a href="https://www.roblox.com/games/GAMEID" target="_blank" class="btn btn-primary">
                             <i data-lucide="play"></i> Play on Roblox
