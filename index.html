@@ -59,9 +59,9 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 20px;
         }
 
         /* ==================== ANIMATED STARS BACKGROUND ==================== */
@@ -636,7 +636,7 @@
 
         .featured-video-large {
             aspect-ratio: 16 / 9;
-            min-height: 220px;
+            min-height: 280px;
         }
 
         .featured-video video,
@@ -727,13 +727,13 @@
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 25px;
         }
 
         .project-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
             transition: all 0.4s ease;
         }
@@ -753,6 +753,12 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
+        }
+
+        .project-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         .project-video video {
@@ -778,8 +784,8 @@
         }
 
         .project-title {
-            padding: 14px 16px;
-            font-size: 14px;
+            padding: 16px 20px;
+            font-size: 15px;
             font-weight: 500;
             text-align: center;
             border-top: 1px solid var(--border-color);
@@ -1359,7 +1365,6 @@
             <div class="projects-grid">
                 <div class="project-card scroll-fade">
                     <div class="project-video">
-                        <!-- Replace with: <video src="videos/round-system.mp4" muted loop playsinline></video> -->
                         <div class="placeholder">
                             <i data-lucide="video" class="placeholder-icon"></i>
                         </div>
@@ -1368,41 +1373,31 @@
                 </div>
                 <div class="project-card scroll-fade">
                     <div class="project-video">
-                        <div class="placeholder">
-                            <i data-lucide="video" class="placeholder-icon"></i>
-                        </div>
+                        <iframe src="https://streamable.com/e/s0t7rz?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                     </div>
                     <div class="project-title">Camera System</div>
                 </div>
                 <div class="project-card scroll-fade">
                     <div class="project-video">
-                        <div class="placeholder">
-                            <i data-lucide="video" class="placeholder-icon"></i>
-                        </div>
+                        <iframe src="https://streamable.com/e/te2vcd?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                     </div>
                     <div class="project-title">Data Saving</div>
                 </div>
                 <div class="project-card scroll-fade">
                     <div class="project-video">
-                        <div class="placeholder">
-                            <i data-lucide="video" class="placeholder-icon"></i>
-                        </div>
+                        <iframe src="https://streamable.com/e/h49mnq?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                     </div>
                     <div class="project-title">Inventory System</div>
                 </div>
                 <div class="project-card scroll-fade">
                     <div class="project-video">
-                        <div class="placeholder">
-                            <i data-lucide="video" class="placeholder-icon"></i>
-                        </div>
+                        <iframe src="https://streamable.com/e/8199xm?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                     </div>
                     <div class="project-title">UI Animations</div>
                 </div>
                 <div class="project-card scroll-fade">
                     <div class="project-video">
-                        <div class="placeholder">
-                            <i data-lucide="video" class="placeholder-icon"></i>
-                        </div>
+                        <iframe src="https://streamable.com/e/8up9ij?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                     </div>
                     <div class="project-title">Shop System</div>
                 </div>
