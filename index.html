@@ -603,9 +603,9 @@
 
         /* ==================== FEATURED PROJECTS ==================== */
         .featured-projects {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
             margin-bottom: 80px;
         }
 
@@ -635,8 +635,8 @@
         }
 
         .featured-video-large {
-            aspect-ratio: 16 / 10;
-            min-height: 300px;
+            aspect-ratio: 16 / 9;
+            min-height: 220px;
         }
 
         .featured-video video,
@@ -1073,6 +1073,10 @@
             }
             
             .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-projects {
                 grid-template-columns: 1fr;
             }
 
