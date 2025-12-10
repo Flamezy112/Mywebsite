@@ -603,16 +603,16 @@
 
         /* ==================== FEATURED PROJECTS ==================== */
         .featured-projects {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-bottom: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 80px;
         }
 
         .featured-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
             transition: all 0.4s ease;
         }
@@ -632,6 +632,11 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
+        }
+
+        .featured-video-large {
+            aspect-ratio: 16 / 10;
+            min-height: 300px;
         }
 
         .featured-video video,
@@ -1071,8 +1076,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .featured-projects {
-                grid-template-columns: 1fr;
+            .featured-video-large {
+                min-height: 250px;
             }
         }
 
@@ -1141,9 +1146,8 @@
                 gap: 20px;
             }
 
-            .featured-projects {
-                grid-template-columns: 1fr;
-                gap: 20px;
+            .featured-video-large {
+                min-height: 200px;
             }
 
             .featured-content {
@@ -1310,8 +1314,8 @@
             <!-- Featured Games -->
             <div class="featured-projects">
                 <div class="featured-card scroll-fade">
-                    <div class="featured-video">
-                        <iframe src="https://streamable.com/e/rprotv?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                    <div class="featured-video featured-video-large">
+                        <iframe src="https://streamable.com/e/bgzciu?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                     </div>
                     <div class="featured-content">
                         <div class="featured-header">
@@ -1326,12 +1330,8 @@
                 </div>
 
                 <div class="featured-card scroll-fade">
-                    <div class="featured-video">
-                        <!-- Replace with: <video src="dressup-video.mp4" muted loop playsinline></video> -->
-                        <div class="placeholder">
-                            <i data-lucide="video" class="placeholder-icon"></i>
-                            <span>Video Coming Soon</span>
-                        </div>
+                    <div class="featured-video featured-video-large">
+                        <iframe src="https://streamable.com/e/pjbl4i?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                     </div>
                     <div class="featured-content">
                         <div class="featured-header">
