@@ -32,43 +32,14 @@
         /* ==================== GRID BACKGROUND ==================== */
         .grid-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none;
             background-image:
                 linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
             background-size: 80px 80px;
             mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0,0,0,0.6), transparent);
             -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0,0,0,0.6), transparent);
-        }
-
-        /* Brighter grid near mouse - layered on top */
-        .grid-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            background-image:
-                linear-gradient(rgba(220, 38, 38, 0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(220, 38, 38, 0.06) 1px, transparent 1px);
-            background-size: 80px 80px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            mask-image: radial-gradient(circle 250px at var(--mx, -1000px) var(--my, -1000px), rgba(0,0,0,1), transparent);
-            -webkit-mask-image: radial-gradient(circle 250px at var(--mx, -1000px) var(--my, -1000px), rgba(0,0,0,1), transparent);
-        }
-
-        body:hover .grid-glow { opacity: 1; }
-
-        @media (pointer: coarse) {
-            .grid-glow { display: none; }
         }
 
         /* ==================== CUSTOM CURSOR ==================== */
@@ -94,26 +65,22 @@
 
         .cursor-hover .cursor-ring { width: 50px; height: 50px; border-color: rgba(255, 255, 255, 0.3); }
 
-        /* Hide cursor on touch / mobile */
         @media (pointer: coarse), (max-width: 1024px) {
             body { cursor: auto !important; }
             .cursor-dot, .cursor-ring { display: none !important; }
         }
 
-        @media (pointer: fine) {
-            body { cursor: none; }
-        }
+        @media (pointer: fine) { body { cursor: none; } }
 
         /* ==================== MOUSE GLOW ==================== */
         .mouse-glow {
             position: fixed; width: 400px; height: 400px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(220, 38, 38, 0.08), transparent 70%);
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.06), transparent 70%);
             pointer-events: none; z-index: 0; transform: translate(-50%, -50%);
             filter: blur(30px); opacity: 0;
         }
 
         body:hover .mouse-glow { opacity: 1; }
-
         @media (pointer: coarse) { .mouse-glow { display: none; } }
 
         /* Ambient glows */
@@ -135,6 +102,38 @@
         #particleCanvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; pointer-events: none;
+        }
+
+        /* ==================== CLICK RIPPLE ==================== */
+        .click-ripple {
+            position: fixed; pointer-events: none; z-index: 9999;
+            width: 0; height: 0; border-radius: 50%;
+            border: 2px solid rgba(220, 38, 38, 0.6);
+            transform: translate(-50%, -50%);
+            animation: rippleExpand 0.6s ease-out forwards;
+        }
+
+        @keyframes rippleExpand {
+            to { width: 80px; height: 80px; opacity: 0; }
+        }
+
+        /* ==================== BACK TO TOP ==================== */
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px; z-index: 999;
+            width: 48px; height: 48px; border-radius: 12px;
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            color: var(--text-white); display: flex; align-items: center; justify-content: center;
+            cursor: pointer; opacity: 0; transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        }
+
+        .back-to-top.visible { opacity: 1; transform: translateY(0); }
+        .back-to-top:hover { background: var(--primary-red); border-color: var(--primary-red); box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4); transform: translateY(-3px); }
+        .back-to-top i { width: 20px; height: 20px; }
+
+        @media (max-width: 768px) {
+            .back-to-top { bottom: 20px; right: 20px; width: 42px; height: 42px; }
         }
 
         /* ==================== NAVIGATION ==================== */
@@ -168,8 +167,6 @@
 
         nav a:not(.nav-cta):hover::after { width: 100%; }
         nav a:hover { color: var(--primary-red); }
-
-        /* Active nav link */
         nav a.active { color: var(--primary-red); }
         nav a.active::after { width: 100%; }
 
@@ -235,6 +232,7 @@
             position: relative; z-index: 1;
         }
 
+        /* ==================== MAGNETIC BUTTONS ==================== */
         .btn {
             padding: 16px 34px; border-radius: 10px; text-decoration: none;
             font-size: 16px; font-weight: 500;
@@ -266,24 +264,32 @@
         .btn-secondary { background: transparent; color: var(--text-white); }
         .btn-secondary:hover { background: var(--card-bg); transform: translateY(-3px); }
 
-        /* Tech Scroll */
+        /* ==================== TECH SCROLL — INFINITE ==================== */
         .tech-scroll {
             margin-top: 60px; overflow: hidden; position: relative;
             opacity: 0; animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-            mask-image: linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
             z-index: 1;
         }
 
-        .tech-track { display: flex; gap: 44px; animation: scroll 20s linear infinite; }
+        .tech-track {
+            display: flex; gap: 44px; width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
 
         .tech-item {
             font-size: 16px; color: var(--text-gray); white-space: nowrap;
             display: flex; align-items: center; gap: 10px; transition: color 0.3s;
+            flex-shrink: 0;
         }
 
         .tech-item:hover { color: var(--text-white); }
-
         .tech-item i { width: 18px; height: 18px; stroke: var(--primary-red); }
         .service-icon i, .benefit-icon i, .pricing-icon i { width: 28px; height: 28px; stroke: var(--primary-red); }
         .social-link i { width: 20px; height: 20px; stroke: currentColor; }
@@ -291,11 +297,6 @@
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(60px) scale(0.96); }
             to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        @keyframes scroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
         }
 
         /* Smoke Effects */
@@ -339,21 +340,16 @@
 
         .stats h2 {
             font-size: 50px; font-weight: 500; letter-spacing: -0.02em;
-            position: relative; z-index: 1;
-            display: inline-block; padding: 0 40px;
-            /* TRANSPARENT background - no black box */
+            position: relative; z-index: 1; display: inline-block; padding: 0 40px;
             background: transparent;
         }
 
-        /* Cover the line behind text with a subtle fade instead */
         .stats-inner {
-            position: relative;
-            display: inline-block;
+            position: relative; display: inline-block;
         }
 
         .stats-inner::before {
-            content: '';
-            position: absolute;
+            content: ''; position: absolute;
             top: 0; left: -20px; right: -20px; bottom: 0;
             background: linear-gradient(90deg, transparent, var(--bg-dark) 8%, var(--bg-dark) 92%, transparent);
             z-index: -1;
@@ -545,11 +541,18 @@
             border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px;
             display: flex; align-items: center; justify-content: center;
             margin-bottom: 22px; transition: all 0.4s; position: relative; z-index: 1;
+            animation: floatIcon 4s ease-in-out infinite;
+            animation-play-state: paused;
         }
 
         .service-card:hover .service-icon {
             background: rgba(220, 38, 38, 0.15); border-color: rgba(220, 38, 38, 0.3);
-            transform: scale(1.08);
+            animation-play-state: running;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
 
         .service-title { font-size: 26px; font-weight: 500; margin-bottom: 16px; position: relative; z-index: 1; }
@@ -712,45 +715,34 @@
             nav ul { gap: 16px; flex-wrap: wrap; justify-content: center; }
             nav a { font-size: 14px; }
             .nav-cta { padding: 9px 18px; font-size: 14px; }
-
             .hero { padding: 130px 20px 60px; }
             .hero h1 { font-size: 42px; }
             .hero p { font-size: 17px; padding: 0 10px; }
-
             .section-title { font-size: 34px; }
             .section-description { font-size: 16px; }
-
             .container { padding: 0 20px; }
             section { padding: 70px 0; }
-
             .cta-buttons { flex-direction: column; width: 100%; padding: 0 20px; }
             .btn { width: 100%; text-align: center; }
-
             .projects-grid { grid-template-columns: 1fr; gap: 20px; }
             .featured-video-large { min-height: 200px; }
             .featured-content { padding: 22px; }
             .featured-title { font-size: 22px; }
             .game-icon { width: 46px; height: 46px; }
             .snippets-header h3 { font-size: 24px; }
-
             .service-card, .benefit-card, .pricing-card { padding: 30px 24px; border-radius: 20px; }
-
             .social-links { flex-direction: column; padding: 0 20px; }
             .social-link { width: 100%; justify-content: center; }
-
             .faq-item { padding: 22px 24px; }
             .faq-question { font-size: 17px; }
-
             .light-shade-right, .light-shade-left { width: 350px; height: 450px; }
             .tech-scroll { margin-top: 40px; }
             .stats h2 { font-size: 26px; padding: 0 16px; }
             .stats-inner::before { display: none; }
             .badge { font-size: 14px; }
-
             .service-title, .benefit-title { font-size: 22px; }
             .pricing-name { font-size: 22px; }
             .pricing-price { font-size: 36px; }
-
             .grid-bg { background-size: 50px 50px; }
         }
 
@@ -766,17 +758,17 @@
     </style>
 </head>
 <body>
-    <!-- Grid Background -->
+    <!-- Background layers -->
     <div class="grid-bg"></div>
-    <div class="grid-glow" id="gridGlow"></div>
-
-    <!-- Custom Cursor -->
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="cursor-ring" id="cursorRing"></div>
     <div class="mouse-glow" id="mouseGlow"></div>
-
-    <!-- Particle Canvas -->
     <canvas id="particleCanvas"></canvas>
+
+    <!-- Back to top -->
+    <div class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i data-lucide="arrow-up"></i>
+    </div>
 
     <!-- Navigation -->
     <nav id="mainNav">
@@ -804,17 +796,8 @@
                 <a href="#pricing" class="btn btn-secondary">View Pricing</a>
             </div>
             <div class="tech-scroll">
-                <div class="tech-track">
-                    <div class="tech-item"><i data-lucide="gamepad-2"></i> Roblox Studio</div>
-                    <div class="tech-item"><i data-lucide="code"></i> Lua Scripting</div>
-                    <div class="tech-item"><i data-lucide="database"></i> DataStores</div>
-                    <div class="tech-item"><i data-lucide="swords"></i> Combat Systems</div>
-                    <div class="tech-item"><i data-lucide="boxes"></i> Modular Architecture</div>
-                    <div class="tech-item"><i data-lucide="gamepad-2"></i> Roblox Studio</div>
-                    <div class="tech-item"><i data-lucide="code"></i> Lua Scripting</div>
-                    <div class="tech-item"><i data-lucide="database"></i> DataStores</div>
-                    <div class="tech-item"><i data-lucide="swords"></i> Combat Systems</div>
-                    <div class="tech-item"><i data-lucide="boxes"></i> Modular Architecture</div>
+                <div class="tech-track" id="techTrack">
+                    <!-- Items duplicated via JS for seamless loop -->
                 </div>
             </div>
         </div>
@@ -823,7 +806,7 @@
     <!-- Stats -->
     <section class="stats scroll-fade">
         <div class="container">
-            <h2><span class="stats-inner"><span class="stat-num">5+</span> Years Experience — Clean, Modular Code — Fast Delivery</span></h2>
+            <h2><span class="stats-inner"><span class="stat-num" data-target="5">0</span>+ Years Experience — Clean, Modular Code — Fast Delivery</span></h2>
         </div>
     </section>
 
@@ -863,10 +846,7 @@
                     </div>
                 </div>
             </div>
-            <div class="snippets-header">
-                <h3>System Snippets</h3>
-                <p>Quick looks at individual systems and mechanics</p>
-            </div>
+            <div class="snippets-header"><h3>System Snippets</h3><p>Quick looks at individual systems and mechanics</p></div>
             <div class="projects-grid stagger-children">
                 <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/h49mnq?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Inventory System</div></div>
                 <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/5ya1xy?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Rebirth System</div></div>
@@ -887,11 +867,7 @@
     <!-- Services -->
     <section id="services">
         <div class="container">
-            <div class="section-header">
-                <div class="section-badge">Services</div>
-                <h2 class="section-title">What I Can Build For You</h2>
-                <p class="section-description">Comprehensive scripting solutions for any Roblox project</p>
-            </div>
+            <div class="section-header"><div class="section-badge">Services</div><h2 class="section-title">What I Can Build For You</h2><p class="section-description">Comprehensive scripting solutions for any Roblox project</p></div>
             <div class="services-grid">
                 <div class="service-card scroll-fade-left"><div class="service-icon"><i data-lucide="gamepad-2"></i></div><h3 class="service-title">Core Gameplay Systems</h3><p class="service-description">Complete gameplay frameworks including round systems with timers, progression and leveling, automated spawning, plot management, leaderboards, and event-driven mechanics.</p><div class="service-tags"><span class="service-tag">Round Systems</span><span class="service-tag">Progression</span><span class="service-tag">Spawning</span><span class="service-tag">Leaderboards</span><span class="service-tag">Events</span><span class="service-tag">Stealing Mechanics</span></div></div>
                 <div class="service-card scroll-fade-right"><div class="service-icon"><i data-lucide="database"></i></div><h3 class="service-title">Data & Backend Systems</h3><p class="service-description">Robust data persistence with inventory systems, player data saving/loading, profile service integration, auto-save functionality, and secure server-client communication.</p><div class="service-tags"><span class="service-tag">DataStores</span><span class="service-tag">Inventory</span><span class="service-tag">Save/Load</span><span class="service-tag">Auto-Save</span><span class="service-tag">Remotes</span></div></div>
@@ -906,11 +882,7 @@
     <!-- Benefits -->
     <section id="benefits">
         <div class="container">
-            <div class="section-header">
-                <div class="section-badge">Benefits</div>
-                <h2 class="section-title">Why Hire Me?</h2>
-                <p class="section-description">Discover the key benefits of working with an experienced professional</p>
-            </div>
+            <div class="section-header"><div class="section-badge">Benefits</div><h2 class="section-title">Why Hire Me?</h2><p class="section-description">Discover the key benefits of working with an experienced professional</p></div>
             <div class="benefits-grid">
                 <div class="benefit-card scroll-fade"><div class="benefit-icon"><i data-lucide="zap"></i></div><h3 class="benefit-title">High Quality Code</h3><p class="benefit-description">Clean, efficient, and modular scripts that follow best practices. Every line of code is optimized for performance and maintainability with comprehensive documentation.</p></div>
                 <div class="benefit-card scroll-fade"><div class="benefit-icon"><i data-lucide="rocket"></i></div><h3 class="benefit-title">Fast Delivery</h3><p class="benefit-description">Unlike other scripters, I work efficiently without compromising quality. Most projects delivered within agreed timelines with regular progress updates.</p></div>
@@ -922,11 +894,7 @@
     <!-- Pricing -->
     <section id="pricing">
         <div class="container">
-            <div class="section-header">
-                <div class="section-badge">Pricing</div>
-                <h2 class="section-title">Flexible Pricing For Any Project</h2>
-                <p class="section-description">Transparent rates based on scope and complexity</p>
-            </div>
+            <div class="section-header"><div class="section-badge">Pricing</div><h2 class="section-title">Flexible Pricing For Any Project</h2><p class="section-description">Transparent rates based on scope and complexity</p></div>
             <div class="pricing-grid">
                 <div class="pricing-card scroll-fade"><div class="pricing-icon"><i data-lucide="file-code"></i></div><h3 class="pricing-name">Simple Scripts</h3><div class="pricing-price">$50 USD+</div><p class="pricing-description">Individual scripts like tool systems, basic UI buttons, simple game mechanics, or quick fixes. Clean code delivered fast.</p><div class="pricing-tags"><span class="pricing-tag">Fast Delivery</span><span class="pricing-tag">Clean Code</span></div><p class="pricing-disclaimer">General starting price. DM me for a tailored quote based on your project.</p><a href="#contact" class="btn btn-primary" style="width:100%;text-align:center;">Get Started</a></div>
                 <div class="pricing-card scroll-fade"><div class="pricing-icon"><i data-lucide="target"></i></div><h3 class="pricing-name">Advanced Systems</h3><div class="pricing-price">$200 USD+</div><p class="pricing-description">Complex systems like DataStore saving, inventory management, round systems, or shop mechanics. Modular, documented, and built to scale.</p><div class="pricing-tags"><span class="pricing-tag">Modular</span><span class="pricing-tag">Documented</span><span class="pricing-tag">Support</span></div><p class="pricing-disclaimer">General starting price. DM me for a tailored quote based on your project.</p><a href="#contact" class="btn btn-primary" style="width:100%;text-align:center;">Get Started</a></div>
@@ -938,11 +906,7 @@
     <!-- FAQ -->
     <section id="faq">
         <div class="container">
-            <div class="section-header">
-                <div class="section-badge">FAQ</div>
-                <h2 class="section-title">Frequently Asked Questions</h2>
-                <p class="section-description">Everything you need to know about working with me</p>
-            </div>
+            <div class="section-header"><div class="section-badge">FAQ</div><h2 class="section-title">Frequently Asked Questions</h2><p class="section-description">Everything you need to know about working with me</p></div>
             <div class="faq-container">
                 <div class="faq-bg"></div>
                 <div class="faq-item scroll-fade"><div class="faq-question">Why should I hire a professional scripter?<span class="faq-toggle">+</span></div><div class="faq-answer">Professional scripters bring expertise, efficiency, and quality that saves you time and money in the long run. We write optimized, bug-free code that scales with your game, preventing costly rewrites later.</div></div>
@@ -972,36 +936,50 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script>
         lucide.createIcons();
-
         const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 1024;
         let mouseX = -9999, mouseY = -9999;
+
+        // ==================== INFINITE TECH SCROLL ====================
+        (function buildMarquee() {
+            const track = document.getElementById('techTrack');
+            const items = [
+                { icon: 'gamepad-2', label: 'Roblox Studio' },
+                { icon: 'code', label: 'Lua Scripting' },
+                { icon: 'database', label: 'DataStores' },
+                { icon: 'swords', label: 'Combat Systems' },
+                { icon: 'boxes', label: 'Modular Architecture' },
+            ];
+            // Create 4 copies for a fully seamless loop
+            let html = '';
+            for (let c = 0; c < 4; c++) {
+                items.forEach(item => {
+                    html += '<div class="tech-item"><i data-lucide="' + item.icon + '"></i> ' + item.label + '</div>';
+                });
+            }
+            track.innerHTML = html;
+            lucide.createIcons({ attrs: {} }); // re-init new icons
+        })();
 
         // ==================== PARTICLE SYSTEM ====================
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
 
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
+                this.size = Math.random() * 2.2 + 0.4;
                 this.vx = (Math.random() - 0.5) * 0.3;
                 this.vy = (Math.random() - 0.5) * 0.3;
                 this.isRed = Math.random() < 0.22;
-                this.baseAlpha = Math.random() * 0.4 + 0.15;
+                this.baseAlpha = Math.random() * 0.45 + 0.12;
                 this.alpha = this.baseAlpha;
                 this.phase = Math.random() * 6.28;
-                // For mouse attraction on mobile via touch
-                this.ox = this.x;
-                this.oy = this.y;
             }
 
             update(t) {
@@ -1011,24 +989,18 @@
                 else if (this.x > canvas.width) this.x = 0;
                 if (this.y < 0) this.y = canvas.height;
                 else if (this.y > canvas.height) this.y = 0;
-
                 this.alpha = this.baseAlpha + Math.sin(t * 0.012 + this.phase) * 0.1;
 
-                // Mouse interaction
                 if (mouseX > -999) {
-                    const dx = this.x - mouseX;
-                    const dy = this.y - mouseY;
+                    const dx = this.x - mouseX, dy = this.y - mouseY;
                     const d2 = dx * dx + dy * dy;
                     const radius = isMobile ? 100 : 150;
-                    const r2 = radius * radius;
-                    if (d2 < r2) {
+                    if (d2 < radius * radius) {
                         const d = Math.sqrt(d2) || 1;
                         const f = (radius - d) / radius;
-                        // Push particles away
                         this.x += (dx / d) * f * 3;
                         this.y += (dy / d) * f * 3;
-                        // Brighten near mouse
-                        this.alpha = Math.min(this.alpha + f * 0.3, 0.9);
+                        this.alpha = Math.min(this.alpha + f * 0.35, 0.95);
                     }
                 }
             }
@@ -1036,14 +1008,14 @@
 
         function initParticles() {
             const area = canvas.width * canvas.height;
+            // More particles!
             const count = isMobile
-                ? Math.min(35, Math.floor(area / 28000))
-                : Math.min(70, Math.floor(area / 16000));
+                ? Math.min(50, Math.floor(area / 20000))
+                : Math.min(110, Math.floor(area / 12000));
             particles = [];
             for (let i = 0; i < count; i++) particles.push(new Particle());
         }
         initParticles();
-        window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
 
         let fc = 0;
         function animate() {
@@ -1059,8 +1031,6 @@
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, 6.28);
                 ctx.fill();
-
-                // Glow for red particles
                 if (p.isRed) {
                     ctx.globalAlpha = p.alpha * 0.3;
                     ctx.beginPath();
@@ -1073,8 +1043,8 @@
             if (mouseX > -999) {
                 ctx.globalAlpha = 1;
                 ctx.lineWidth = 0.5;
-                const checkR = isMobile ? 40000 : 90000;
-                const connDist = isMobile ? 80 : 110;
+                const checkR = isMobile ? 50000 : 100000;
+                const connDist = isMobile ? 80 : 120;
                 const connDist2 = connDist * connDist;
                 for (let i = 0; i < len; i++) {
                     const a = particles[i];
@@ -1085,8 +1055,7 @@
                         const dx = a.x - b.x, dy = a.y - b.y;
                         const d2 = dx * dx + dy * dy;
                         if (d2 < connDist2) {
-                            const opacity = (1 - Math.sqrt(d2) / connDist) * 0.15;
-                            ctx.strokeStyle = 'rgba(220,38,38,' + opacity + ')';
+                            ctx.strokeStyle = 'rgba(220,38,38,' + ((1 - Math.sqrt(d2) / connDist) * 0.18) + ')';
                             ctx.beginPath();
                             ctx.moveTo(a.x, a.y);
                             ctx.lineTo(b.x, b.y);
@@ -1095,15 +1064,40 @@
                     }
                 }
             }
-
             ctx.globalAlpha = 1;
             requestAnimationFrame(animate);
         }
         animate();
 
-        // ==================== MOUSE & TOUCH TRACKING ====================
-        const gridGlow = document.getElementById('gridGlow');
+        // ==================== CLICK RIPPLE + PARTICLE BURST ====================
+        document.addEventListener('click', e => {
+            // Ripple
+            const ripple = document.createElement('div');
+            ripple.className = 'click-ripple';
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            document.body.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
 
+            // Spawn burst particles at click
+            for (let i = 0; i < 6; i++) {
+                const p = new Particle();
+                p.x = e.clientX;
+                p.y = e.clientY;
+                const angle = (Math.PI * 2 / 6) * i + Math.random() * 0.5;
+                const speed = 1.5 + Math.random() * 1.5;
+                p.vx = Math.cos(angle) * speed;
+                p.vy = Math.sin(angle) * speed;
+                p.isRed = true;
+                p.size = 1.5 + Math.random();
+                p.baseAlpha = 0.7;
+                particles.push(p);
+            }
+            // Keep particle count in check
+            while (particles.length > 150) particles.shift();
+        });
+
+        // ==================== CURSOR & MOUSE TRACKING ====================
         if (!isMobile) {
             const dot = document.getElementById('cursorDot');
             const ring = document.getElementById('cursorRing');
@@ -1115,8 +1109,6 @@
                 cx = e.clientX; cy = e.clientY;
                 dot.style.left = cx + 'px'; dot.style.top = cy + 'px';
                 glow.style.left = cx + 'px'; glow.style.top = cy + 'px';
-                gridGlow.style.setProperty('--mx', cx + 'px');
-                gridGlow.style.setProperty('--my', cy + 'px');
             });
 
             (function ringLoop() {
@@ -1126,57 +1118,74 @@
                 requestAnimationFrame(ringLoop);
             })();
 
-            document.querySelectorAll('a, button, .btn, .faq-item, .nav-cta').forEach(el => {
+            document.querySelectorAll('a, button, .btn, .faq-item, .nav-cta, .back-to-top').forEach(el => {
                 el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
                 el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
             });
 
             document.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
-        } else {
-            // Touch support for particles on mobile
-            document.addEventListener('touchmove', e => {
-                if (e.touches.length > 0) {
-                    mouseX = e.touches[0].clientX;
-                    mouseY = e.touches[0].clientY;
-                }
-            }, { passive: true });
 
+            // Magnetic effect on hero buttons
+            document.querySelectorAll('.cta-buttons .btn').forEach(btn => {
+                btn.addEventListener('mousemove', e => {
+                    const r = btn.getBoundingClientRect();
+                    const x = e.clientX - r.left - r.width / 2;
+                    const y = e.clientY - r.top - r.height / 2;
+                    btn.style.transform = 'translate(' + (x * 0.15) + 'px,' + (y * 0.15) + 'px)';
+                });
+                btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+            });
+        } else {
+            // Mobile touch
+            document.addEventListener('touchmove', e => {
+                if (e.touches.length > 0) { mouseX = e.touches[0].clientX; mouseY = e.touches[0].clientY; }
+            }, { passive: true });
             document.addEventListener('touchend', () => {
-                // Keep position for a moment then fade
                 setTimeout(() => { mouseX = -9999; mouseY = -9999; }, 500);
             });
         }
 
-        // ==================== NAV SCROLL + ACTIVE SECTION ====================
+        // ==================== NAV + BACK TO TOP + ACTIVE SECTION ====================
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('nav a[data-section]');
+        const backBtn = document.getElementById('backToTop');
 
         window.addEventListener('scroll', () => {
             const st = window.scrollY;
             document.getElementById('mainNav').classList.toggle('scrolled', st > 80);
+            backBtn.classList.toggle('visible', st > 600);
 
-            // Active section highlighting
             let current = '';
-            sections.forEach(s => {
-                const top = s.offsetTop - 200;
-                if (st >= top) current = s.getAttribute('id');
-            });
-
-            navLinks.forEach(link => {
-                link.classList.toggle('active', link.dataset.section === current);
-            });
+            sections.forEach(s => { if (st >= s.offsetTop - 200) current = s.id; });
+            navLinks.forEach(link => link.classList.toggle('active', link.dataset.section === current));
         }, { passive: true });
+
+        // ==================== COUNTER ANIMATION ====================
+        const statEl = document.querySelector('.stat-num[data-target]');
+        let counted = false;
+        const counterObs = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && !counted) {
+                counted = true;
+                const target = parseInt(statEl.dataset.target);
+                let current = 0;
+                const step = () => {
+                    current++;
+                    statEl.textContent = current;
+                    if (current < target) requestAnimationFrame(step);
+                };
+                step();
+            }
+        }, { threshold: 0.5 });
+        counterObs.observe(statEl);
 
         // ==================== SCROLL ANIMATIONS ====================
         const obs = new IntersectionObserver(entries => {
-            for (const e of entries) {
-                if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-            }
+            for (const e of entries) if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
         }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
 
         document.querySelectorAll('.scroll-fade, .scroll-fade-left, .scroll-fade-right, .section-header').forEach(el => obs.observe(el));
 
-        // ==================== TILT EFFECT (desktop) ====================
+        // ==================== TILT (desktop) ====================
         if (!isMobile) {
             document.querySelectorAll('.featured-card, .service-card, .benefit-card, .pricing-card').forEach(card => {
                 card.addEventListener('mousemove', e => {
