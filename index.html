@@ -34,7 +34,7 @@
             cursor: none;
         }
 
-        /* ==================== CUSTOM CURSOR ==================== */
+        /* ==================== CUSTOM CURSOR (desktop only) ==================== */
         .cursor-dot {
             position: fixed;
             width: 8px;
@@ -45,24 +45,21 @@
             z-index: 10000;
             transform: translate(-50%, -50%);
             transition: width 0.2s, height 0.2s, background 0.2s;
-            box-shadow: 0 0 15px rgba(220, 38, 38, 0.6), 0 0 30px rgba(220, 38, 38, 0.3);
+            box-shadow: 0 0 12px rgba(220, 38, 38, 0.5), 0 0 25px rgba(220, 38, 38, 0.2);
+            will-change: left, top;
         }
 
         .cursor-ring {
             position: fixed;
             width: 36px;
             height: 36px;
-            border: 1.5px solid rgba(220, 38, 38, 0.5);
+            border: 1.5px solid rgba(220, 38, 38, 0.4);
             border-radius: 50%;
             pointer-events: none;
             z-index: 10000;
             transform: translate(-50%, -50%);
-            transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.3s;
-        }
-
-        body:hover .cursor-dot,
-        body:hover .cursor-ring {
-            opacity: 1;
+            transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+            will-change: left, top;
         }
 
         .cursor-hover .cursor-dot {
@@ -78,13 +75,30 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* Restore default cursor on mobile */
-        @media (max-width: 768px) {
-            body { cursor: auto; }
-            .cursor-dot, .cursor-ring { display: none; }
+        @media (pointer: coarse), (max-width: 1024px) {
+            body { cursor: auto !important; }
+            .cursor-dot, .cursor-ring { display: none !important; }
         }
 
-        /* Subtle background glow effects throughout page */
+        /* ==================== MOUSE GLOW ==================== */
+        .mouse-glow {
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.07), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            filter: blur(30px);
+            opacity: 0;
+            will-change: left, top;
+        }
+
+        body:hover .mouse-glow { opacity: 1; }
+
+        @media (pointer: coarse) { .mouse-glow { display: none; } }
+
         body::before {
             content: '';
             position: fixed;
@@ -112,10 +126,9 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
-        /* ==================== INTERACTIVE PARTICLE CANVAS ==================== */
         #particleCanvas {
             position: fixed;
             top: 0;
@@ -126,25 +139,6 @@
             pointer-events: none;
         }
 
-        /* ==================== MOUSE GLOW FOLLOWER ==================== */
-        .mouse-glow {
-            position: fixed;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(220, 38, 38, 0.08), transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-            transform: translate(-50%, -50%);
-            filter: blur(40px);
-            transition: opacity 0.3s;
-            opacity: 0;
-        }
-
-        body:hover .mouse-glow {
-            opacity: 1;
-        }
-
         /* ==================== NAVIGATION ==================== */
         nav {
             position: fixed;
@@ -153,15 +147,16 @@
             transform: translateX(-50%);
             z-index: 1000;
             backdrop-filter: blur(16px) saturate(1.4);
+            -webkit-backdrop-filter: blur(16px) saturate(1.4);
             background: rgba(0, 0, 0, 0.55);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px 30px;
+            border-radius: 14px;
+            padding: 16px 38px;
             transition: background 0.4s, box-shadow 0.4s, border-color 0.4s;
         }
 
         nav.scrolled {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.82);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             border-color: rgba(220, 38, 38, 0.15);
         }
@@ -169,14 +164,15 @@
         nav ul {
             list-style: none;
             display: flex;
-            gap: 30px;
+            gap: 36px;
             align-items: center;
         }
 
         nav a {
             color: var(--text-white);
             text-decoration: none;
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: 400;
             transition: color 0.3s;
             position: relative;
         }
@@ -193,19 +189,15 @@
             border-radius: 1px;
         }
 
-        nav a:not(.nav-cta):hover::after {
-            width: 100%;
-        }
-
-        nav a:hover {
-            color: var(--primary-red);
-        }
+        nav a:not(.nav-cta):hover::after { width: 100%; }
+        nav a:hover { color: var(--primary-red); }
 
         .nav-cta {
             background: linear-gradient(90deg, var(--bg-card), var(--bg-card));
             border: 1px solid var(--border-color);
-            padding: 8px 20px;
-            border-radius: 8px;
+            padding: 10px 26px;
+            border-radius: 10px;
+            font-size: 16px;
             transition: all 0.3s;
         }
 
@@ -216,7 +208,7 @@
             box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
         }
 
-        /* ==================== HERO SECTION ==================== */
+        /* ==================== HERO ==================== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -229,45 +221,43 @@
         }
 
         .badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 15px;
             font-weight: 300;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
             opacity: 0;
             animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
             position: relative;
             z-index: 1;
         }
 
-        /* Pulsing availability dot */
-        .badge::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
+        .badge-dot {
+            width: 9px;
+            height: 9px;
             background: #22c55e;
             border-radius: 50%;
-            margin-right: 8px;
-            vertical-align: middle;
+            margin-right: 10px;
             animation: pulse-dot 2s ease-in-out infinite;
             box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+            flex-shrink: 0;
         }
 
         @keyframes pulse-dot {
             0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(34, 197, 94, 0.6); }
-            50% { opacity: 0.5; box-shadow: 0 0 16px rgba(34, 197, 94, 0.3); }
+            50% { opacity: 0.4; box-shadow: 0 0 16px rgba(34, 197, 94, 0.3); }
         }
 
         .hero h1 {
-            font-size: 72px;
+            font-size: 78px;
             font-weight: 600;
             letter-spacing: -0.03em;
             line-height: 1.05;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             opacity: 0;
             animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
             position: relative;
@@ -281,26 +271,11 @@
             background-clip: text;
         }
 
-        /* Typewriter blink on "Perfected" */
-        .hero h1 .typewriter-cursor {
-            display: inline-block;
-            width: 3px;
-            height: 0.85em;
-            background: var(--primary-red);
-            margin-left: 4px;
-            vertical-align: text-bottom;
-            animation: blink 1s step-end infinite;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
         .hero p {
-            font-size: 20px;
+            font-size: 21px;
             color: var(--text-gray);
-            max-width: 600px;
-            margin: 0 auto 40px;
+            max-width: 620px;
+            margin: 0 auto 42px;
             opacity: 0;
             animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
             position: relative;
@@ -318,10 +293,10 @@
         }
 
         .btn {
-            padding: 15px 30px;
+            padding: 16px 34px;
             border-radius: 10px;
             text-decoration: none;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             display: inline-block;
@@ -330,7 +305,6 @@
             overflow: hidden;
         }
 
-        /* Button shimmer effect on hover */
         .btn::before {
             content: '';
             position: absolute;
@@ -338,13 +312,11 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.07), transparent);
             transition: left 0.5s ease;
         }
 
-        .btn:hover::before {
-            left: 100%;
-        }
+        .btn:hover::before { left: 100%; }
 
         .btn-primary {
             background: var(--bg-card);
@@ -369,7 +341,6 @@
             transform: translateY(-3px);
         }
 
-        /* Tech Stack Scroll */
         .tech-scroll {
             margin-top: 60px;
             overflow: hidden;
@@ -377,12 +348,13 @@
             opacity: 0;
             animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
             mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgb(0,0,0) 25%, rgb(0,0,0) 75%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgb(0,0,0) 25%, rgb(0,0,0) 75%, rgba(0,0,0,0) 100%);
             z-index: 1;
         }
 
         .tech-track {
             display: flex;
-            gap: 40px;
+            gap: 44px;
             animation: scroll 20s linear infinite;
         }
 
@@ -396,9 +368,7 @@
             transition: color 0.3s;
         }
 
-        .tech-item:hover {
-            color: var(--text-white);
-        }
+        .tech-item:hover { color: var(--text-white); }
 
         .tech-item i {
             width: 18px;
@@ -406,18 +376,7 @@
             stroke: var(--primary-red);
         }
 
-        /* Lucide Icon Styles */
-        .badge-icon {
-            width: 16px;
-            height: 16px;
-            stroke: var(--primary-red);
-            vertical-align: middle;
-            margin-right: 5px;
-        }
-
-        .service-icon i,
-        .benefit-icon i,
-        .pricing-icon i {
+        .service-icon i, .benefit-icon i, .pricing-icon i {
             width: 28px;
             height: 28px;
             stroke: var(--primary-red);
@@ -430,14 +389,8 @@
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(80px) scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(60px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         @keyframes scroll {
@@ -445,9 +398,7 @@
             to { transform: translateX(-50%); }
         }
 
-        /* Animated Smoke/Stream Effects */
-        .light-shade-right,
-        .light-shade-left {
+        .light-shade-right, .light-shade-left {
             position: absolute;
             pointer-events: none;
             z-index: 0;
@@ -455,59 +406,29 @@
         }
 
         .light-shade-right {
-            top: -100px;
-            right: -300px;
-            width: 600px;
-            height: 800px;
+            top: -100px; right: -300px; width: 600px; height: 800px;
             background: radial-gradient(ellipse at center, rgba(220, 38, 38, 0.15), rgba(220, 38, 38, 0.08) 40%, transparent 70%);
-            opacity: 0;
-            animation: fadeSlideInRight 2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+            opacity: 0; animation: fadeSlideInRight 2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
         }
 
         .light-shade-left {
-            top: -100px;
-            left: -300px;
-            width: 600px;
-            height: 800px;
+            top: -100px; left: -300px; width: 600px; height: 800px;
             background: radial-gradient(ellipse at center, rgba(220, 38, 38, 0.15), rgba(220, 38, 38, 0.08) 40%, transparent 70%);
-            opacity: 0;
-            animation: fadeSlideInLeft 2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+            opacity: 0; animation: fadeSlideInLeft 2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
         }
 
-        .smoke-layer {
-            position: absolute;
-            pointer-events: none;
-            z-index: 0;
-            filter: blur(60px);
-            opacity: 0;
-        }
+        .smoke-layer { position: absolute; pointer-events: none; z-index: 0; filter: blur(60px); opacity: 0; }
 
         .smoke-top {
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 400px;
+            top: 0; left: 50%; transform: translateX(-50%); width: 800px; height: 400px;
             background: radial-gradient(ellipse at top, rgba(220, 38, 38, 0.12), rgba(220, 38, 38, 0.05) 50%, transparent 80%);
             animation: fadeIn 3s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards;
         }
 
-        @keyframes fadeSlideInRight {
-            from { opacity: 0; transform: translateX(150px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
+        @keyframes fadeSlideInRight { from { opacity: 0; transform: translateX(150px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeSlideInLeft { from { opacity: 0; transform: translateX(-150px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        @keyframes fadeSlideInLeft {
-            from { opacity: 0; transform: translateX(-150px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Stats Section */
         .stats {
             padding: 80px 0;
             text-align: center;
@@ -516,996 +437,406 @@
 
         .stats::before {
             content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60%;
-            height: 2px;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 60%; height: 2px;
             background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.3), transparent);
             z-index: 0;
         }
 
         .stats h2 {
-            font-size: 50px;
-            font-weight: 500;
-            letter-spacing: -0.02em;
-            position: relative;
-            z-index: 1;
-            background: var(--bg-dark);
-            display: inline-block;
-            padding: 0 40px;
+            font-size: 50px; font-weight: 500; letter-spacing: -0.02em;
+            position: relative; z-index: 1;
+            background: var(--bg-dark); display: inline-block; padding: 0 40px;
         }
 
-        /* Counter animation for stats */
-        .stats h2 .stat-num {
-            display: inline-block;
+        .stat-num {
             background: linear-gradient(135deg, var(--text-white), var(--primary-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
 
-        /* Section */
-        section {
-            padding: 100px 0;
-            position: relative;
-        }
+        section { padding: 110px 0; position: relative; }
 
-        /* Section glow accents */
-        #services::before,
-        #pricing::before {
-            content: '';
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 300px;
+        #services::before, #pricing::before {
+            content: ''; position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 300px;
             background: radial-gradient(ellipse, rgba(220, 38, 38, 0.06), transparent 70%);
-            pointer-events: none;
-            z-index: -1;
-            filter: blur(60px);
+            pointer-events: none; z-index: -1; filter: blur(60px);
         }
 
         #benefits::after {
-            content: '';
-            position: absolute;
-            bottom: 10%;
-            right: 0;
-            width: 400px;
-            height: 400px;
+            content: ''; position: absolute; bottom: 10%; right: 0; width: 400px; height: 400px;
             background: radial-gradient(circle, rgba(220, 38, 38, 0.05), transparent 70%);
-            pointer-events: none;
-            z-index: -1;
-            filter: blur(80px);
+            pointer-events: none; z-index: -1; filter: blur(80px);
         }
 
         #work::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 300px;
-            height: 300px;
+            content: ''; position: absolute; top: 0; left: 0; width: 300px; height: 300px;
             background: radial-gradient(circle, rgba(220, 38, 38, 0.04), transparent 70%);
-            pointer-events: none;
-            z-index: -1;
-            filter: blur(60px);
+            pointer-events: none; z-index: -1; filter: blur(60px);
         }
 
-        /* Section dividers */
-        #work::after,
-        #services::after,
-        #benefits::before,
-        #faq::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 1px;
+        #work::after, #services::after, #benefits::before, #faq::before {
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 60%; height: 1px;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
         }
 
-        #benefits::before {
-            top: 0;
-            bottom: auto;
-        }
-
-        #faq::before {
-            top: 0;
-            bottom: auto;
-        }
+        #benefits::before { top: 0; bottom: auto; }
+        #faq::before { top: 0; bottom: auto; }
 
         .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-            opacity: 0;
-            transform: translateY(50px);
+            text-align: center; margin-bottom: 64px;
+            opacity: 0; transform: translateY(50px);
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .section-header.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .section-header.visible { opacity: 1; transform: translateY(0); }
 
         .section-badge {
-            display: inline-block;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 300;
-            color: var(--text-gray);
-            margin-bottom: 20px;
+            display: inline-block; background: var(--bg-card); border: 1px solid var(--border-color);
+            padding: 9px 18px; border-radius: 10px; font-size: 15px; font-weight: 300;
+            color: var(--text-gray); margin-bottom: 22px;
         }
 
         .section-title {
-            font-size: 50px;
-            font-weight: 500;
-            letter-spacing: -0.02em;
-            margin-bottom: 15px;
+            font-size: 54px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 16px;
         }
 
-        .section-description {
-            font-size: 18px;
-            color: var(--text-gray);
-        }
+        .section-description { font-size: 19px; color: var(--text-gray); }
 
-        /* Scroll Animations - GPU Optimized */
         .scroll-fade {
-            opacity: 0;
-            transform: translateY(60px);
-            transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
+            opacity: 0; transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        .scroll-fade.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .scroll-fade.visible { opacity: 1; transform: translateY(0); }
 
         .scroll-fade-left {
-            opacity: 0;
-            transform: translateX(-60px);
-            transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
+            opacity: 0; transform: translateX(-50px);
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        .scroll-fade-left.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
+        .scroll-fade-left.visible { opacity: 1; transform: translateX(0); }
 
         .scroll-fade-right {
-            opacity: 0;
-            transform: translateX(60px);
-            transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
+            opacity: 0; transform: translateX(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        .scroll-fade-right.visible { opacity: 1; transform: translateX(0); }
 
-        .scroll-fade-right.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Staggered children animation */
         .stagger-children .scroll-fade:nth-child(1) { transition-delay: 0s; }
-        .stagger-children .scroll-fade:nth-child(2) { transition-delay: 0.1s; }
-        .stagger-children .scroll-fade:nth-child(3) { transition-delay: 0.2s; }
-        .stagger-children .scroll-fade:nth-child(4) { transition-delay: 0.3s; }
-        .stagger-children .scroll-fade:nth-child(5) { transition-delay: 0.4s; }
-        .stagger-children .scroll-fade:nth-child(6) { transition-delay: 0.5s; }
-        .stagger-children .scroll-fade:nth-child(7) { transition-delay: 0.6s; }
-        .stagger-children .scroll-fade:nth-child(8) { transition-delay: 0.7s; }
-        .stagger-children .scroll-fade:nth-child(9) { transition-delay: 0.8s; }
-        .stagger-children .scroll-fade:nth-child(10) { transition-delay: 0.9s; }
-        .stagger-children .scroll-fade:nth-child(11) { transition-delay: 1.0s; }
-        .stagger-children .scroll-fade:nth-child(12) { transition-delay: 1.1s; }
+        .stagger-children .scroll-fade:nth-child(2) { transition-delay: 0.08s; }
+        .stagger-children .scroll-fade:nth-child(3) { transition-delay: 0.16s; }
+        .stagger-children .scroll-fade:nth-child(4) { transition-delay: 0.24s; }
+        .stagger-children .scroll-fade:nth-child(5) { transition-delay: 0.32s; }
+        .stagger-children .scroll-fade:nth-child(6) { transition-delay: 0.4s; }
+        .stagger-children .scroll-fade:nth-child(7) { transition-delay: 0.48s; }
+        .stagger-children .scroll-fade:nth-child(8) { transition-delay: 0.56s; }
+        .stagger-children .scroll-fade:nth-child(9) { transition-delay: 0.64s; }
+        .stagger-children .scroll-fade:nth-child(10) { transition-delay: 0.72s; }
+        .stagger-children .scroll-fade:nth-child(11) { transition-delay: 0.8s; }
+        .stagger-children .scroll-fade:nth-child(12) { transition-delay: 0.88s; }
 
         /* ==================== FEATURED PROJECTS ==================== */
-        .featured-projects {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-bottom: 80px;
-        }
+        .featured-projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-bottom: 80px; }
 
         .featured-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 24px;
+            overflow: hidden; transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1); position: relative;
         }
 
-        /* Card glow on hover */
         .featured-card::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 24px;
-            padding: 1px;
+            content: ''; position: absolute; inset: -1px; border-radius: 24px; padding: 1px;
             background: linear-gradient(135deg, transparent 40%, rgba(220, 38, 38, 0.4), transparent 60%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            opacity: 0; transition: opacity 0.45s; pointer-events: none;
         }
 
-        .featured-card:hover::before {
-            opacity: 1;
-        }
-
-        .featured-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(220, 38, 38, 0.15);
-        }
+        .featured-card:hover::before { opacity: 1; }
+        .featured-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(220, 38, 38, 0.12); }
 
         .featured-video {
-            width: 100%;
-            aspect-ratio: 16 / 9;
+            width: 100%; aspect-ratio: 16 / 9;
             background: linear-gradient(135deg, rgba(220, 38, 38, 0.2), rgba(20, 20, 20, 0.9));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+            display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
         }
 
-        .featured-video-large {
-            aspect-ratio: 16 / 9;
-            min-height: 280px;
-        }
+        .featured-video-large { aspect-ratio: 16 / 9; min-height: 280px; }
 
-        .featured-video video,
-        .featured-video iframe {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border: none;
-        }
+        .featured-video video, .featured-video iframe { width: 100%; height: 100%; object-fit: cover; border: none; }
 
-        .featured-video .placeholder {
-            color: var(--text-gray);
-            font-size: 14px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .featured-video .placeholder .placeholder-icon {
-            width: 50px;
-            height: 50px;
-            stroke: var(--text-gray);
-            opacity: 0.5;
-        }
-
-        .featured-content {
-            padding: 25px 30px 30px;
-        }
-
-        .featured-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 12px;
-        }
+        .featured-content { padding: 28px 32px 34px; }
+        .featured-header { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
 
         .game-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            object-fit: cover;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s;
+            width: 54px; height: 54px; border-radius: 12px; object-fit: cover;
+            border: 1px solid var(--border-color); transition: transform 0.3s;
         }
 
-        .featured-card:hover .game-icon {
-            transform: scale(1.08);
-        }
+        .featured-card:hover .game-icon { transform: scale(1.08); }
 
-        .featured-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin: 0;
-        }
+        .featured-title { font-size: 26px; font-weight: 600; margin: 0; }
+        .featured-description { color: var(--text-gray); font-size: 16px; line-height: 1.65; margin-bottom: 22px; }
+        .featured-content .btn { display: inline-flex; align-items: center; gap: 8px; }
+        .featured-content .btn i { width: 18px; height: 18px; }
 
-        .featured-description {
-            color: var(--text-gray);
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
+        .snippets-header { text-align: center; margin-bottom: 44px; }
+        .snippets-header h3 { font-size: 30px; font-weight: 500; margin-bottom: 8px; }
+        .snippets-header p { color: var(--text-gray); font-size: 17px; }
 
-        .featured-content .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .featured-content .btn i {
-            width: 18px;
-            height: 18px;
-        }
-
-        /* Snippets Header */
-        .snippets-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .snippets-header h3 {
-            font-size: 28px;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .snippets-header p {
-            color: var(--text-gray);
-            font-size: 16px;
-        }
-
-        /* ==================== VIDEO PROJECTS GRID ==================== */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
+        /* ==================== PROJECTS GRID ==================== */
+        .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 
         .project-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 18px;
+            overflow: hidden; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .project-card:hover {
-            transform: translateY(-6px) scale(1.02);
-            border-color: rgba(220, 38, 38, 0.4);
-            box-shadow: 0 10px 40px rgba(220, 38, 38, 0.12);
+            transform: translateY(-6px); border-color: rgba(220, 38, 38, 0.35);
+            box-shadow: 0 10px 40px rgba(220, 38, 38, 0.1);
         }
 
         .project-video {
-            width: 100%;
-            aspect-ratio: 16 / 9;
+            width: 100%; aspect-ratio: 16 / 9;
             background: linear-gradient(135deg, rgba(220, 38, 38, 0.15), rgba(20, 20, 20, 0.9));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
+            display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
         }
 
-        .project-video iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+        .project-video iframe, .project-video video { width: 100%; height: 100%; border: none; object-fit: cover; }
+        .project-title { padding: 18px 22px; font-size: 16px; font-weight: 500; text-align: center; border-top: 1px solid var(--border-color); }
 
-        .project-video video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .project-title {
-            padding: 16px 20px;
-            font-size: 15px;
-            font-weight: 500;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-        }
-
-        /* Services Grid */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-        }
+        /* ==================== SERVICES ==================== */
+        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
 
         .service-card {
             background: linear-gradient(149deg, rgba(220, 38, 38, 0.15), rgba(255, 255, 255, 0.06) 29%, rgba(255, 255, 255, 0.06) 74%, rgba(220, 38, 38, 0.15));
-            border: 1px solid var(--border-color);
-            border-radius: 30px;
-            padding: 40px;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
+            border: 1px solid var(--border-color); border-radius: 30px; padding: 44px;
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden;
         }
 
-        /* Subtle inner glow on hover */
         .service-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(ellipse at 50% 0%, rgba(220, 38, 38, 0.1), transparent 60%);
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
+            opacity: 0; transition: opacity 0.45s; pointer-events: none;
         }
 
-        .service-card:hover::after {
-            opacity: 1;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(220, 38, 38, 0.25);
-        }
+        .service-card:hover::after { opacity: 1; }
+        .service-card:hover { transform: translateY(-8px); border-color: rgba(220, 38, 38, 0.25); }
 
         .service-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            margin-bottom: 20px;
-            transition: all 0.4s;
-            position: relative;
-            z-index: 1;
+            width: 64px; height: 64px; background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center; font-size: 30px;
+            margin-bottom: 22px; transition: all 0.4s; position: relative; z-index: 1;
         }
 
         .service-card:hover .service-icon {
-            background: rgba(220, 38, 38, 0.15);
-            border-color: rgba(220, 38, 38, 0.3);
-            transform: scale(1.1);
+            background: rgba(220, 38, 38, 0.15); border-color: rgba(220, 38, 38, 0.3); transform: scale(1.08);
         }
 
-        .service-title {
-            font-size: 24px;
-            font-weight: 500;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .service-description {
-            color: var(--text-gray);
-            line-height: 1.8;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .service-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            position: relative;
-            z-index: 1;
-        }
+        .service-title { font-size: 26px; font-weight: 500; margin-bottom: 16px; position: relative; z-index: 1; }
+        .service-description { color: var(--text-gray); line-height: 1.8; font-size: 16px; margin-bottom: 22px; position: relative; z-index: 1; }
+        .service-tags { display: flex; flex-wrap: wrap; gap: 8px; position: relative; z-index: 1; }
 
         .service-tag {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--border-color);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--text-gray);
-            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-color);
+            padding: 7px 15px; border-radius: 20px; font-size: 13px; color: var(--text-gray); transition: all 0.3s;
         }
 
-        .service-card:hover .service-tag {
-            border-color: rgba(220, 38, 38, 0.2);
-        }
+        .service-card:hover .service-tag { border-color: rgba(220, 38, 38, 0.2); }
 
-        /* Benefits Grid */
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
+        /* ==================== BENEFITS ==================== */
+        .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
 
         .benefit-card {
             background: linear-gradient(149deg, rgba(220, 38, 38, 0.15), rgba(255, 255, 255, 0.06) 29%, rgba(255, 255, 255, 0.06) 74%, rgba(220, 38, 38, 0.15));
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 40px;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid var(--border-color); border-radius: 24px; padding: 44px;
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .benefit-card:hover {
-            background: var(--bg-card);
-            transform: translateY(-5px);
-            border-color: rgba(220, 38, 38, 0.25);
-        }
+        .benefit-card:hover { background: var(--bg-card); transform: translateY(-6px); border-color: rgba(220, 38, 38, 0.25); }
+        .benefit-icon { font-size: 40px; margin-bottom: 22px; }
+        .benefit-title { font-size: 24px; font-weight: 500; margin-bottom: 16px; }
+        .benefit-description { color: var(--text-gray); font-size: 16px; line-height: 1.7; }
 
-        .benefit-icon {
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-
-        .benefit-title {
-            font-size: 22px;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
-        .benefit-description {
-            color: var(--text-gray);
-        }
-
-        /* Pricing Section */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
+        /* ==================== PRICING ==================== */
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
 
         .pricing-card {
             background: linear-gradient(149deg, rgba(220, 38, 38, 0.15), rgba(255, 255, 255, 0.06) 29%, rgba(255, 255, 255, 0.06) 74%, rgba(220, 38, 38, 0.15));
-            border: 1px solid var(--border-color);
-            border-radius: 30px;
-            padding: 40px;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
+            border: 1px solid var(--border-color); border-radius: 30px; padding: 44px;
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden;
         }
 
         .pricing-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(ellipse at 50% 0%, rgba(220, 38, 38, 0.08), transparent 60%);
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
+            opacity: 0; transition: opacity 0.45s; pointer-events: none;
         }
 
-        .pricing-card:hover::after {
-            opacity: 1;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary-red);
-            box-shadow: 0 20px 60px rgba(220, 38, 38, 0.15);
-        }
+        .pricing-card:hover::after { opacity: 1; }
+        .pricing-card:hover { transform: translateY(-8px); border-color: var(--primary-red); box-shadow: 0 20px 60px rgba(220, 38, 38, 0.12); }
 
         .pricing-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
+            width: 56px; height: 56px; background: rgba(255, 255, 255, 0.08); border-radius: 14px;
+            display: flex; align-items: center; justify-content: center; font-size: 24px;
+            margin-bottom: 22px; position: relative; z-index: 1;
         }
 
-        .pricing-name {
-            font-size: 24px;
-            font-weight: 500;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
+        .pricing-name { font-size: 26px; font-weight: 500; margin-bottom: 16px; position: relative; z-index: 1; }
 
         .pricing-price {
-            font-size: 40px;
-            font-weight: 600;
-            margin-bottom: 15px;
+            font-size: 44px; font-weight: 600; margin-bottom: 16px;
             background: linear-gradient(135deg, var(--text-white), var(--primary-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-            z-index: 1;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            position: relative; z-index: 1;
         }
 
-        .pricing-description {
-            color: var(--text-gray);
-            line-height: 1.7;
-            margin-bottom: 25px;
-            font-size: 15px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .pricing-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 1;
-        }
+        .pricing-description { color: var(--text-gray); line-height: 1.7; margin-bottom: 26px; font-size: 16px; position: relative; z-index: 1; }
+        .pricing-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; position: relative; z-index: 1; }
 
         .pricing-tag {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--border-color);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--text-gray);
+            background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-color);
+            padding: 7px 15px; border-radius: 20px; font-size: 13px; color: var(--text-gray);
         }
 
-        .pricing-disclaimer {
-            font-size: 12px;
-            color: var(--text-gray);
-            opacity: 0.7;
-            margin-bottom: 20px;
-            font-style: italic;
-            position: relative;
-            z-index: 1;
-        }
+        .pricing-disclaimer { font-size: 13px; color: var(--text-gray); opacity: 0.7; margin-bottom: 22px; font-style: italic; position: relative; z-index: 1; }
 
-        /* FAQ Section */
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
+        /* ==================== FAQ ==================== */
+        .faq-container { max-width: 820px; margin: 0 auto; position: relative; }
 
         .faq-bg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 200px;
-            background: radial-gradient(ellipse, rgba(220, 38, 38, 0.3), transparent);
-            filter: blur(50px);
-            z-index: -1;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 100%; height: 200px;
+            background: radial-gradient(ellipse, rgba(220, 38, 38, 0.25), transparent);
+            filter: blur(50px); z-index: -1;
         }
 
         .faq-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px;
+            padding: 30px 34px; margin-bottom: 20px; cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .faq-item:hover {
-            background: var(--bg-card);
-            border-color: rgba(220, 38, 38, 0.2);
-        }
-
-        .faq-item.active {
-            border-color: rgba(220, 38, 38, 0.3);
-        }
+        .faq-item:hover { background: var(--bg-card); border-color: rgba(220, 38, 38, 0.2); }
+        .faq-item.active { border-color: rgba(220, 38, 38, 0.3); }
 
         .faq-question {
-            font-size: 18px;
-            font-weight: 500;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            font-size: 19px; font-weight: 500; display: flex;
+            justify-content: space-between; align-items: center; gap: 16px;
         }
 
-        .faq-toggle {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.4s;
-            flex-shrink: 0;
-            color: var(--text-gray);
-        }
-
-        .faq-item.active .faq-toggle {
-            transform: rotate(45deg);
-            color: var(--primary-red);
-        }
+        .faq-toggle { font-size: 20px; transition: all 0.4s; flex-shrink: 0; color: var(--text-gray); line-height: 1; }
+        .faq-item.active .faq-toggle { transform: rotate(45deg); color: var(--primary-red); }
 
         .faq-answer {
-            max-height: 0;
-            overflow: hidden;
+            max-height: 0; overflow: hidden;
             transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), margin 0.4s;
-            color: var(--text-gray);
-            line-height: 1.8;
+            color: var(--text-gray); line-height: 1.8; font-size: 16px;
         }
 
-        .faq-item.active .faq-answer {
-            max-height: 300px;
-            margin-top: 15px;
-        }
+        .faq-item.active .faq-answer { max-height: 300px; margin-top: 16px; }
 
-        /* Contact Section */
-        .contact-section {
-            text-align: center;
-            padding: 100px 0;
-            position: relative;
-        }
+        /* ==================== CONTACT ==================== */
+        .contact-section { text-align: center; padding: 110px 0; position: relative; }
 
         .contact-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 1px;
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 80%; height: 1px;
             background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.4), transparent);
         }
 
         .contact-section::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 500px;
-            height: 500px;
+            content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 500px; height: 500px;
             background: radial-gradient(circle, rgba(220, 38, 38, 0.08), transparent 60%);
-            pointer-events: none;
-            z-index: -1;
-            filter: blur(80px);
+            pointer-events: none; z-index: -1; filter: blur(80px);
         }
 
-        .social-links {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 30px;
-        }
+        .social-links { display: flex; gap: 20px; justify-content: center; margin-top: 32px; }
 
         .social-link {
-            padding: 15px 30px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-white);
-            text-decoration: none;
+            padding: 16px 34px; background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 14px; color: var(--text-white); text-decoration: none;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: flex; align-items: center; gap: 10px; font-size: 16px;
         }
 
         .social-link:hover {
-            background: var(--primary-red);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.35);
+            background: var(--primary-red); transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
         }
 
-        /* Footer */
         footer {
-            text-align: center;
-            padding: 40px 0;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-gray);
+            text-align: center; padding: 40px 0;
+            border-top: 1px solid var(--border-color); color: var(--text-gray); font-size: 15px;
         }
 
-        /* ==================== MAGNETIC TILT FOR CARDS ==================== */
-        .tilt-card {
-            transform-style: preserve-3d;
-            perspective: 800px;
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1200px) {
+            .pricing-grid { grid-template-columns: 1fr 1fr; }
         }
 
-        /* Responsive */
         @media (max-width: 1024px) {
-            .projects-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .featured-projects {
-                grid-template-columns: 1fr;
-            }
-
-            .featured-video-large {
-                min-height: 250px;
-            }
+            .projects-grid { grid-template-columns: repeat(2, 1fr); }
+            .services-grid, .benefits-grid, .pricing-grid { grid-template-columns: 1fr; }
+            .featured-projects { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 58px; }
+            .section-title { font-size: 42px; }
+            .stats h2 { font-size: 38px; }
         }
 
         @media (max-width: 768px) {
-            nav {
-                padding: 10px 15px;
-                width: 95%;
-                top: 10px;
-            }
-
-            nav ul {
-                gap: 10px;
-                font-size: 11px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .nav-cta {
-                padding: 6px 12px;
-                font-size: 11px;
-            }
-
-            .hero {
-                padding: 120px 20px 60px;
-            }
-
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .hero p {
-                font-size: 16px;
-                padding: 0 10px;
-            }
-
-            .section-title {
-                font-size: 28px;
-                padding: 0 10px;
-            }
-
-            .section-description {
-                font-size: 16px;
-                padding: 0 10px;
-            }
-
-            .container {
-                padding: 0 20px;
-            }
-
-            section {
-                padding: 60px 20px;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                width: 100%;
-                padding: 0 20px;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .featured-video-large {
-                min-height: 200px;
-            }
-
-            .featured-content {
-                padding: 20px;
-            }
-
-            .featured-title {
-                font-size: 20px;
-            }
-
-            .featured-header {
-                gap: 12px;
-            }
-
-            .game-icon {
-                width: 45px;
-                height: 45px;
-            }
-
-            .snippets-header h3 {
-                font-size: 22px;
-            }
-
-            .services-grid,
-            .benefits-grid,
-            .pricing-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .service-card,
-            .benefit-card,
-            .pricing-card {
-                padding: 30px 20px;
-            }
-
-            .social-links {
-                flex-direction: column;
-                padding: 0 20px;
-            }
-
-            .social-link {
-                width: 100%;
-            }
-
-            .faq-item {
-                padding: 20px;
-            }
-
-            .faq-question {
-                font-size: 16px;
-            }
-
-            .light-shade-right,
-            .light-shade-left {
-                width: 400px;
-                height: 500px;
-            }
-
-            .tech-scroll {
-                margin-top: 40px;
-            }
-
-            .tech-item {
-                font-size: 14px;
-            }
-
-            .stats h2 {
-                font-size: 28px;
-            }
+            nav { padding: 12px 18px; width: 94%; top: 12px; border-radius: 12px; }
+            nav ul { gap: 16px; flex-wrap: wrap; justify-content: center; }
+            nav a { font-size: 14px; }
+            .nav-cta { padding: 9px 18px; font-size: 14px; }
+            .hero { padding: 120px 20px 60px; }
+            .hero h1 { font-size: 42px; }
+            .hero p { font-size: 17px; padding: 0 10px; }
+            .section-title { font-size: 34px; padding: 0 10px; }
+            .section-description { font-size: 16px; padding: 0 10px; }
+            .container { padding: 0 20px; }
+            section { padding: 70px 20px; }
+            .cta-buttons { flex-direction: column; width: 100%; padding: 0 20px; }
+            .btn { width: 100%; text-align: center; }
+            .projects-grid { grid-template-columns: 1fr; gap: 20px; }
+            .featured-video-large { min-height: 200px; }
+            .featured-content { padding: 22px; }
+            .featured-title { font-size: 22px; }
+            .featured-header { gap: 12px; }
+            .game-icon { width: 46px; height: 46px; }
+            .snippets-header h3 { font-size: 24px; }
+            .service-card, .benefit-card, .pricing-card { padding: 30px 24px; border-radius: 20px; }
+            .social-links { flex-direction: column; padding: 0 20px; }
+            .social-link { width: 100%; justify-content: center; }
+            .faq-item { padding: 22px 24px; }
+            .faq-question { font-size: 17px; }
+            .light-shade-right, .light-shade-left { width: 400px; height: 500px; }
+            .tech-scroll { margin-top: 40px; }
+            .stats h2 { font-size: 28px; padding: 0 20px; }
+            .badge { font-size: 14px; }
+            .service-title, .benefit-title { font-size: 22px; }
+            .pricing-name { font-size: 22px; }
+            .pricing-price { font-size: 36px; }
         }
 
-        /* Extra small devices */
         @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 28px;
-            }
-
-            .section-title {
-                font-size: 24px;
-            }
-
-            nav ul {
-                gap: 8px;
-                font-size: 10px;
-            }
-
-            .nav-cta {
-                padding: 5px 10px;
-                font-size: 10px;
-            }
-
-            .pricing-price {
-                font-size: 28px;
-            }
-
-            .service-icon,
-            .benefit-icon,
-            .pricing-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-            }
+            .hero h1 { font-size: 34px; }
+            .section-title { font-size: 28px; }
+            nav ul { gap: 12px; }
+            nav a { font-size: 12px; }
+            .nav-cta { padding: 8px 14px; font-size: 12px; }
+            .stats h2 { font-size: 22px; }
         }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="cursor-ring" id="cursorRing"></div>
-
-    <!-- Mouse Glow Follower -->
     <div class="mouse-glow" id="mouseGlow"></div>
-
-    <!-- Interactive Particle Canvas -->
     <canvas id="particleCanvas"></canvas>
 
-    <!-- Navigation -->
     <nav id="mainNav">
         <ul>
             <li><a href="#work">My Work</a></li>
@@ -1517,15 +848,13 @@
         </ul>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="light-shade-right"></div>
         <div class="light-shade-left"></div>
         <div class="smoke-layer smoke-top"></div>
-        
         <div class="container">
-            <div class="badge">Currently Available For Work</div>
-            <h1>Your Scripts, <span class="highlight">Perfected</span><span class="typewriter-cursor"></span></h1>
+            <div class="badge"><span class="badge-dot"></span> Currently Available For Work</div>
+            <h1>Your Scripts, <span class="highlight">Perfected</span></h1>
             <p>Professional Roblox Lua scripter delivering high-quality, modular scripts for your games — from full-stack development to specialized systems.</p>
             <div class="cta-buttons">
                 <a href="#services" class="btn btn-primary">View Services</a>
@@ -1548,14 +877,12 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
     <section class="stats scroll-fade">
         <div class="container">
             <h2><span class="stat-num">5+</span> Years Experience — Clean, Modular Code — Fast Delivery</h2>
         </div>
     </section>
 
-    <!-- Projects Section -->
     <section id="work">
         <div class="container">
             <div class="section-header">
@@ -1563,12 +890,10 @@
                 <h2 class="section-title">Games & Systems I've Built</h2>
                 <p class="section-description">Full game showcases and system snippets</p>
             </div>
-
-            <!-- Featured Games -->
             <div class="featured-projects">
-                <div class="featured-card scroll-fade tilt-card">
+                <div class="featured-card scroll-fade">
                     <div class="featured-video featured-video-large">
-                        <iframe src="https://streamable.com/e/bgzciu?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        <iframe src="https://streamable.com/e/bgzciu?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>
                     </div>
                     <div class="featured-content">
                         <div class="featured-header">
@@ -1576,15 +901,12 @@
                             <h3 class="featured-title">Dress A Brainrot</h3>
                         </div>
                         <p class="featured-description">Purchase lucky blocks to unlock rare items and customize your brainrot. Features rebirth system, progression mechanics, stealing, fighting, and much more.</p>
-                        <a href="https://www.roblox.com/games/98792997173843/Dress-a-Brainrot" target="_blank" class="btn btn-primary">
-                            <i data-lucide="play"></i> Play on Roblox
-                        </a>
+                        <a href="https://www.roblox.com/games/98792997173843/Dress-a-Brainrot" target="_blank" class="btn btn-primary"><i data-lucide="play"></i> Play on Roblox</a>
                     </div>
                 </div>
-
-                <div class="featured-card scroll-fade tilt-card">
+                <div class="featured-card scroll-fade">
                     <div class="featured-video featured-video-large">
-                        <iframe src="https://streamable.com/e/pjbl4i?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        <iframe src="https://streamable.com/e/pjbl4i?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>
                     </div>
                     <div class="featured-content">
                         <div class="featured-header">
@@ -1592,97 +914,31 @@
                             <h3 class="featured-title">Dress To Win</h3>
                         </div>
                         <p class="featured-description">Dress up your character and level up with XP. Show off on stage with custom camera angles, 3D character viewer, item equipping, podium system, leaderboards, and more.</p>
-                        <a href="https://www.roblox.com/games/113444668706153/Dress-To-Win" target="_blank" class="btn btn-primary">
-                            <i data-lucide="play"></i> Play on Roblox
-                        </a>
+                        <a href="https://www.roblox.com/games/113444668706153/Dress-To-Win" target="_blank" class="btn btn-primary"><i data-lucide="play"></i> Play on Roblox</a>
                     </div>
                 </div>
             </div>
-
-            <!-- System Snippets -->
             <div class="snippets-header">
                 <h3>System Snippets</h3>
                 <p>Quick looks at individual systems and mechanics</p>
             </div>
-
             <div class="projects-grid stagger-children">
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <iframe src="https://streamable.com/e/h49mnq?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    </div>
-                    <div class="project-title">Inventory System</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <iframe src="https://streamable.com/e/5ya1xy?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    </div>
-                    <div class="project-title">Rebirth System</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <iframe src="https://streamable.com/e/s0t7rz?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    </div>
-                    <div class="project-title">Camera System</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <iframe src="https://streamable.com/e/5gk4o6?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    </div>
-                    <div class="project-title">Mutations System</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <iframe src="https://streamable.com/e/gknj25?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    </div>
-                    <div class="project-title">Round & Tutorial System</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <iframe src="https://streamable.com/e/6w0q5j?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    </div>
-                    <div class="project-title">Index System</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <iframe src="https://streamable.com/e/te2vcd?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    </div>
-                    <div class="project-title">Data Saving</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <iframe src="https://streamable.com/e/6ot9p4?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    </div>
-                    <div class="project-title">Multi Block Picking</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <iframe src="https://streamable.com/e/8199xm?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    </div>
-                    <div class="project-title">UI Animations</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <iframe src="https://streamable.com/e/a15ovg?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    </div>
-                    <div class="project-title">Rewards System</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <iframe src="https://streamable.com/e/8up9ij?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    </div>
-                    <div class="project-title">Shop System</div>
-                </div>
-                <div class="project-card scroll-fade">
-                    <div class="project-video">
-                        <iframe src="https://streamable.com/e/n10b4f?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                    </div>
-                    <div class="project-title">Weather System</div>
-                </div>
+                <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/h49mnq?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Inventory System</div></div>
+                <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/5ya1xy?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Rebirth System</div></div>
+                <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/s0t7rz?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Camera System</div></div>
+                <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/5gk4o6?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Mutations System</div></div>
+                <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/gknj25?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Round & Tutorial System</div></div>
+                <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/6w0q5j?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Index System</div></div>
+                <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/te2vcd?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Data Saving</div></div>
+                <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/6ot9p4?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Multi Block Picking</div></div>
+                <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/8199xm?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">UI Animations</div></div>
+                <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/a15ovg?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Rewards System</div></div>
+                <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/8up9ij?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Shop System</div></div>
+                <div class="project-card scroll-fade"><div class="project-video"><iframe data-src="https://streamable.com/e/n10b4f?autoplay=1&muted=1&loop=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div><div class="project-title">Weather System</div></div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
     <section id="services">
         <div class="container">
             <div class="section-header">
@@ -1691,84 +947,16 @@
                 <p class="section-description">Comprehensive scripting solutions for any Roblox project</p>
             </div>
             <div class="services-grid">
-                <div class="service-card scroll-fade-left tilt-card">
-                    <div class="service-icon"><i data-lucide="gamepad-2"></i></div>
-                    <h3 class="service-title">Core Gameplay Systems</h3>
-                    <p class="service-description">Complete gameplay frameworks including round systems with timers, progression and leveling, automated spawning, plot management, leaderboards, and event-driven mechanics.</p>
-                    <div class="service-tags">
-                        <span class="service-tag">Round Systems</span>
-                        <span class="service-tag">Progression</span>
-                        <span class="service-tag">Spawning</span>
-                        <span class="service-tag">Leaderboards</span>
-                        <span class="service-tag">Events</span>
-                        <span class="service-tag">Stealing Mechanics</span>
-                    </div>
-                </div>
-                <div class="service-card scroll-fade-right tilt-card">
-                    <div class="service-icon"><i data-lucide="database"></i></div>
-                    <h3 class="service-title">Data & Backend Systems</h3>
-                    <p class="service-description">Robust data persistence with inventory systems, player data saving/loading, profile service integration, auto-save functionality, and secure server-client communication.</p>
-                    <div class="service-tags">
-                        <span class="service-tag">DataStores</span>
-                        <span class="service-tag">Inventory</span>
-                        <span class="service-tag">Save/Load</span>
-                        <span class="service-tag">Auto-Save</span>
-                        <span class="service-tag">Remotes</span>
-                    </div>
-                </div>
-                <div class="service-card scroll-fade-left tilt-card">
-                    <div class="service-icon"><i data-lucide="sparkles"></i></div>
-                    <h3 class="service-title">UI & Player Experience</h3>
-                    <p class="service-description">Advanced UI with smooth tweens, sound feedback, accessory equip systems, interactive buttons, and polished UX flows that make your game feel professional.</p>
-                    <div class="service-tags">
-                        <span class="service-tag">UI Tweens</span>
-                        <span class="service-tag">Sound Design</span>
-                        <span class="service-tag">Accessory Systems</span>
-                        <span class="service-tag">Smooth UX</span>
-                        <span class="service-tag">Buttons & Actions</span>
-                    </div>
-                </div>
-                <div class="service-card scroll-fade-right tilt-card">
-                    <div class="service-icon"><i data-lucide="camera"></i></div>
-                    <h3 class="service-title">Camera & Visual Effects</h3>
-                    <p class="service-description">Custom camera angles, cinematic movements, screen transitions, visual feedback systems, and polished effects that elevate your game's presentation.</p>
-                    <div class="service-tags">
-                        <span class="service-tag">Custom Cameras</span>
-                        <span class="service-tag">Transitions</span>
-                        <span class="service-tag">Visual Effects</span>
-                        <span class="service-tag">Animations</span>
-                        <span class="service-tag">Polish</span>
-                    </div>
-                </div>
-                <div class="service-card scroll-fade-left tilt-card">
-                    <div class="service-icon"><i data-lucide="bot"></i></div>
-                    <h3 class="service-title">NPC & World Interaction</h3>
-                    <p class="service-description">NPC dialogue systems, shop mechanics for buying/selling, world triggers, placement systems, and interactive objects that bring your game world to life.</p>
-                    <div class="service-tags">
-                        <span class="service-tag">NPC Dialogue</span>
-                        <span class="service-tag">Shop Systems</span>
-                        <span class="service-tag">World Triggers</span>
-                        <span class="service-tag">Placement</span>
-                        <span class="service-tag">Interactions</span>
-                    </div>
-                </div>
-                <div class="service-card scroll-fade-right tilt-card">
-                    <div class="service-icon"><i data-lucide="wrench"></i></div>
-                    <h3 class="service-title">Clean & Scalable Code</h3>
-                    <p class="service-description">Modular architecture, optimized performance, proper documentation, and maintainable code structures that make future updates easy.</p>
-                    <div class="service-tags">
-                        <span class="service-tag">Modular Design</span>
-                        <span class="service-tag">Optimized</span>
-                        <span class="service-tag">Documented</span>
-                        <span class="service-tag">Scalable</span>
-                        <span class="service-tag">Maintainable</span>
-                    </div>
-                </div>
+                <div class="service-card scroll-fade-left"><div class="service-icon"><i data-lucide="gamepad-2"></i></div><h3 class="service-title">Core Gameplay Systems</h3><p class="service-description">Complete gameplay frameworks including round systems with timers, progression and leveling, automated spawning, plot management, leaderboards, and event-driven mechanics.</p><div class="service-tags"><span class="service-tag">Round Systems</span><span class="service-tag">Progression</span><span class="service-tag">Spawning</span><span class="service-tag">Leaderboards</span><span class="service-tag">Events</span><span class="service-tag">Stealing Mechanics</span></div></div>
+                <div class="service-card scroll-fade-right"><div class="service-icon"><i data-lucide="database"></i></div><h3 class="service-title">Data & Backend Systems</h3><p class="service-description">Robust data persistence with inventory systems, player data saving/loading, profile service integration, auto-save functionality, and secure server-client communication.</p><div class="service-tags"><span class="service-tag">DataStores</span><span class="service-tag">Inventory</span><span class="service-tag">Save/Load</span><span class="service-tag">Auto-Save</span><span class="service-tag">Remotes</span></div></div>
+                <div class="service-card scroll-fade-left"><div class="service-icon"><i data-lucide="sparkles"></i></div><h3 class="service-title">UI & Player Experience</h3><p class="service-description">Advanced UI with smooth tweens, sound feedback, accessory equip systems, interactive buttons, and polished UX flows that make your game feel professional.</p><div class="service-tags"><span class="service-tag">UI Tweens</span><span class="service-tag">Sound Design</span><span class="service-tag">Accessory Systems</span><span class="service-tag">Smooth UX</span><span class="service-tag">Buttons & Actions</span></div></div>
+                <div class="service-card scroll-fade-right"><div class="service-icon"><i data-lucide="camera"></i></div><h3 class="service-title">Camera & Visual Effects</h3><p class="service-description">Custom camera angles, cinematic movements, screen transitions, visual feedback systems, and polished effects that elevate your game's presentation.</p><div class="service-tags"><span class="service-tag">Custom Cameras</span><span class="service-tag">Transitions</span><span class="service-tag">Visual Effects</span><span class="service-tag">Animations</span><span class="service-tag">Polish</span></div></div>
+                <div class="service-card scroll-fade-left"><div class="service-icon"><i data-lucide="bot"></i></div><h3 class="service-title">NPC & World Interaction</h3><p class="service-description">NPC dialogue systems, shop mechanics for buying/selling, world triggers, placement systems, and interactive objects that bring your game world to life.</p><div class="service-tags"><span class="service-tag">NPC Dialogue</span><span class="service-tag">Shop Systems</span><span class="service-tag">World Triggers</span><span class="service-tag">Placement</span><span class="service-tag">Interactions</span></div></div>
+                <div class="service-card scroll-fade-right"><div class="service-icon"><i data-lucide="wrench"></i></div><h3 class="service-title">Clean & Scalable Code</h3><p class="service-description">Modular architecture, optimized performance, proper documentation, and maintainable code structures that make future updates easy.</p><div class="service-tags"><span class="service-tag">Modular Design</span><span class="service-tag">Optimized</span><span class="service-tag">Documented</span><span class="service-tag">Scalable</span><span class="service-tag">Maintainable</span></div></div>
             </div>
         </div>
     </section>
 
-    <!-- Benefits Section -->
     <section id="benefits">
         <div class="container">
             <div class="section-header">
@@ -1777,26 +965,13 @@
                 <p class="section-description">Discover the key benefits of working with an experienced professional</p>
             </div>
             <div class="benefits-grid">
-                <div class="benefit-card scroll-fade tilt-card">
-                    <div class="benefit-icon"><i data-lucide="zap"></i></div>
-                    <h3 class="benefit-title">High Quality Code</h3>
-                    <p class="benefit-description">Clean, efficient, and modular scripts that follow best practices. Every line of code is optimized for performance and maintainability with comprehensive documentation.</p>
-                </div>
-                <div class="benefit-card scroll-fade tilt-card">
-                    <div class="benefit-icon"><i data-lucide="rocket"></i></div>
-                    <h3 class="benefit-title">Fast Delivery</h3>
-                    <p class="benefit-description">Unlike other scripters, I work efficiently without compromising quality. Most projects delivered within agreed timelines with regular progress updates.</p>
-                </div>
-                <div class="benefit-card scroll-fade tilt-card">
-                    <div class="benefit-icon"><i data-lucide="message-circle"></i></div>
-                    <h3 class="benefit-title">Excellent Communication</h3>
-                    <p class="benefit-description">Available for discussions and updates. Quick response times to answer questions or address concerns you may have throughout the development process.</p>
-                </div>
+                <div class="benefit-card scroll-fade"><div class="benefit-icon"><i data-lucide="zap"></i></div><h3 class="benefit-title">High Quality Code</h3><p class="benefit-description">Clean, efficient, and modular scripts that follow best practices. Every line of code is optimized for performance and maintainability with comprehensive documentation.</p></div>
+                <div class="benefit-card scroll-fade"><div class="benefit-icon"><i data-lucide="rocket"></i></div><h3 class="benefit-title">Fast Delivery</h3><p class="benefit-description">Unlike other scripters, I work efficiently without compromising quality. Most projects delivered within agreed timelines with regular progress updates.</p></div>
+                <div class="benefit-card scroll-fade"><div class="benefit-icon"><i data-lucide="message-circle"></i></div><h3 class="benefit-title">Excellent Communication</h3><p class="benefit-description">Available for discussions and updates. Quick response times to answer questions or address concerns you may have throughout the development process.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Pricing Section -->
     <section id="pricing">
         <div class="container">
             <div class="section-header">
@@ -1805,49 +980,13 @@
                 <p class="section-description">Transparent rates based on scope and complexity</p>
             </div>
             <div class="pricing-grid">
-                <div class="pricing-card scroll-fade tilt-card">
-                    <div class="pricing-icon"><i data-lucide="file-code"></i></div>
-                    <h3 class="pricing-name">Simple Scripts</h3>
-                    <div class="pricing-price">$50 USD+</div>
-                    <p class="pricing-description">Individual scripts like tool systems, basic UI buttons, simple game mechanics, or quick fixes. Clean code delivered fast.</p>
-                    <div class="pricing-tags">
-                        <span class="pricing-tag">Fast Delivery</span>
-                        <span class="pricing-tag">Clean Code</span>
-                    </div>
-                    <p class="pricing-disclaimer">General starting price. DM me for a tailored quote based on your project.</p>
-                    <a href="#contact" class="btn btn-primary" style="width: 100%;">Get Started</a>
-                </div>
-                <div class="pricing-card scroll-fade tilt-card">
-                    <div class="pricing-icon"><i data-lucide="target"></i></div>
-                    <h3 class="pricing-name">Advanced Systems</h3>
-                    <div class="pricing-price">$200 USD+</div>
-                    <p class="pricing-description">Complex systems like DataStore saving, inventory management, round systems, or shop mechanics. Modular, documented, and built to scale.</p>
-                    <div class="pricing-tags">
-                        <span class="pricing-tag">Modular</span>
-                        <span class="pricing-tag">Documented</span>
-                        <span class="pricing-tag">Support</span>
-                    </div>
-                    <p class="pricing-disclaimer">General starting price. DM me for a tailored quote based on your project.</p>
-                    <a href="#contact" class="btn btn-primary" style="width: 100%;">Get Started</a>
-                </div>
-                <div class="pricing-card scroll-fade tilt-card">
-                    <div class="pricing-icon"><i data-lucide="gamepad-2"></i></div>
-                    <h3 class="pricing-name">Full Game Development</h3>
-                    <div class="pricing-price">$800 USD+</div>
-                    <p class="pricing-description">Complete Roblox game from start to finish. All systems, UI, backend, saving, and gameplay — fully optimized with post-launch support included.</p>
-                    <div class="pricing-tags">
-                        <span class="pricing-tag">Full-Stack</span>
-                        <span class="pricing-tag">Optimized</span>
-                        <span class="pricing-tag">Post-Launch Support</span>
-                    </div>
-                    <p class="pricing-disclaimer">General starting price. DM me for a tailored quote based on your project.</p>
-                    <a href="#contact" class="btn btn-primary" style="width: 100%;">Get Started</a>
-                </div>
+                <div class="pricing-card scroll-fade"><div class="pricing-icon"><i data-lucide="file-code"></i></div><h3 class="pricing-name">Simple Scripts</h3><div class="pricing-price">$50 USD+</div><p class="pricing-description">Individual scripts like tool systems, basic UI buttons, simple game mechanics, or quick fixes. Clean code delivered fast.</p><div class="pricing-tags"><span class="pricing-tag">Fast Delivery</span><span class="pricing-tag">Clean Code</span></div><p class="pricing-disclaimer">General starting price. DM me for a tailored quote based on your project.</p><a href="#contact" class="btn btn-primary" style="width:100%;text-align:center;">Get Started</a></div>
+                <div class="pricing-card scroll-fade"><div class="pricing-icon"><i data-lucide="target"></i></div><h3 class="pricing-name">Advanced Systems</h3><div class="pricing-price">$200 USD+</div><p class="pricing-description">Complex systems like DataStore saving, inventory management, round systems, or shop mechanics. Modular, documented, and built to scale.</p><div class="pricing-tags"><span class="pricing-tag">Modular</span><span class="pricing-tag">Documented</span><span class="pricing-tag">Support</span></div><p class="pricing-disclaimer">General starting price. DM me for a tailored quote based on your project.</p><a href="#contact" class="btn btn-primary" style="width:100%;text-align:center;">Get Started</a></div>
+                <div class="pricing-card scroll-fade"><div class="pricing-icon"><i data-lucide="gamepad-2"></i></div><h3 class="pricing-name">Full Game Development</h3><div class="pricing-price">$800 USD+</div><p class="pricing-description">Complete Roblox game from start to finish. All systems, UI, backend, saving, and gameplay — fully optimized with post-launch support included.</p><div class="pricing-tags"><span class="pricing-tag">Full-Stack</span><span class="pricing-tag">Optimized</span><span class="pricing-tag">Post-Launch Support</span></div><p class="pricing-disclaimer">General starting price. DM me for a tailored quote based on your project.</p><a href="#contact" class="btn btn-primary" style="width:100%;text-align:center;">Get Started</a></div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
     <section id="faq">
         <div class="container">
             <div class="section-header">
@@ -1857,342 +996,226 @@
             </div>
             <div class="faq-container">
                 <div class="faq-bg"></div>
-                <div class="faq-item scroll-fade">
-                    <div class="faq-question">
-                        Why should I hire a professional scripter?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        Professional scripters bring expertise, efficiency, and quality that saves you time and money in the long run. We write optimized, bug-free code that scales with your game, preventing costly rewrites later.
-                    </div>
-                </div>
-                <div class="faq-item scroll-fade">
-                    <div class="faq-question">
-                        How long do scripts take to complete?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        Simple scripts take anywhere from same day to 2 days. More advanced systems take 1 to 4 days depending on complexity. Full game development takes anywhere from 1 to 4 weeks depending on the scope and complexity of the project.
-                    </div>
-                </div>
-                <div class="faq-item scroll-fade">
-                    <div class="faq-question">
-                        What if I need changes after delivery?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        Reasonable revisions are included in all packages. Bug fixes are always free. Additional features beyond the original scope can be added for a fair additional cost.
-                    </div>
-                </div>
-                <div class="faq-item scroll-fade">
-                    <div class="faq-question">
-                        What payment methods do you accept?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        I accept Crypto (preferred), PayPal, and Robux (though I prefer USD over Robux). For larger projects, I require 25-50% upfront and payment throughout tasks/milestones as they're completed.
-                    </div>
-                </div>
-                <div class="faq-item scroll-fade">
-                    <div class="faq-question">
-                        What is your refund policy?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        I offer refunds if I cannot deliver on the agreed requirements. However, once work has begun and progress has been made, the deposit is non-refundable.
-                    </div>
-                </div>
+                <div class="faq-item scroll-fade"><div class="faq-question">Why should I hire a professional scripter?<span class="faq-toggle">+</span></div><div class="faq-answer">Professional scripters bring expertise, efficiency, and quality that saves you time and money in the long run. We write optimized, bug-free code that scales with your game, preventing costly rewrites later.</div></div>
+                <div class="faq-item scroll-fade"><div class="faq-question">How long do scripts take to complete?<span class="faq-toggle">+</span></div><div class="faq-answer">Simple scripts take anywhere from same day to 2 days. More advanced systems take 1 to 4 days depending on complexity. Full game development takes anywhere from 1 to 4 weeks depending on the scope and complexity of the project.</div></div>
+                <div class="faq-item scroll-fade"><div class="faq-question">What if I need changes after delivery?<span class="faq-toggle">+</span></div><div class="faq-answer">Reasonable revisions are included in all packages. Bug fixes are always free. Additional features beyond the original scope can be added for a fair additional cost.</div></div>
+                <div class="faq-item scroll-fade"><div class="faq-question">What payment methods do you accept?<span class="faq-toggle">+</span></div><div class="faq-answer">I accept Crypto (preferred), PayPal, and Robux (though I prefer USD over Robux). For larger projects, I require 25-50% upfront and payment throughout tasks/milestones as they're completed.</div></div>
+                <div class="faq-item scroll-fade"><div class="faq-question">What is your refund policy?<span class="faq-toggle">+</span></div><div class="faq-answer">I offer refunds if I cannot deliver on the agreed requirements. However, once work has begun and progress has been made, the deposit is non-refundable.</div></div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="contact-section scroll-fade">
         <div class="container">
             <div class="section-badge">Contact</div>
             <h2 class="section-title">Let's Talk.</h2>
             <p class="section-description">Ready to bring your game to life? Contact me on the platforms below:</p>
             <div class="social-links">
-                <a href="https://discord.com/users/flamezyot" class="social-link" target="_blank">
-                    <i data-lucide="message-circle"></i> Discord: flamezyot
-                </a>
-                <a href="https://www.roblox.com/users/88431194/profile" class="social-link" target="_blank">
-                    <i data-lucide="gamepad-2"></i> Roblox: fellipereis
-                </a>
+                <a href="https://discord.com/users/flamezyot" class="social-link" target="_blank"><i data-lucide="message-circle"></i> Discord: flamezyot</a>
+                <a href="https://www.roblox.com/users/88431194/profile" class="social-link" target="_blank"><i data-lucide="gamepad-2"></i> Roblox: fellipereis</a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Flamezy. Professional Roblox Scripter. All rights reserved.</p>
-        </div>
-    </footer>
+    <footer><div class="container"><p>&copy; 2025 Flamezy. Professional Roblox Scripter. All rights reserved.</p></div></footer>
 
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script>
-        // Initialize Lucide icons
         lucide.createIcons();
 
-        // ==================== INTERACTIVE PARTICLE SYSTEM ====================
+        // ==================== OPTIMIZED PARTICLE SYSTEM ====================
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        let mouseX = -1000;
-        let mouseY = -1000;
-        const MOUSE_RADIUS = 150;
-        const CONNECT_DISTANCE = 120;
+        let mouseX = -9999, mouseY = -9999;
+        const MOUSE_RADIUS = 130;
+        const CONNECT_DIST_SQ = 10000; // 100^2
+        let isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 1024;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 1024;
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
         class Particle {
             constructor() {
-                this.reset();
-            }
-
-            reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.baseX = this.x;
-                this.baseY = this.y;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.3;
-                this.speedY = (Math.random() - 0.5) * 0.3;
-                this.isRed = Math.random() < 0.2;
-                this.opacity = Math.random() * 0.5 + 0.2;
-                this.pulseSpeed = Math.random() * 0.02 + 0.01;
-                this.pulseOffset = Math.random() * Math.PI * 2;
+                this.size = Math.random() * 1.8 + 0.5;
+                this.vx = (Math.random() - 0.5) * 0.25;
+                this.vy = (Math.random() - 0.5) * 0.25;
+                this.isRed = Math.random() < 0.18;
+                this.baseAlpha = Math.random() * 0.35 + 0.15;
+                this.alpha = this.baseAlpha;
+                this.phase = Math.random() * 6.28;
             }
 
-            update(time) {
-                // Gentle floating movement
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                // Wrap around edges
-                if (this.x < -10) this.x = canvas.width + 10;
-                if (this.x > canvas.width + 10) this.x = -10;
-                if (this.y < -10) this.y = canvas.height + 10;
-                if (this.y > canvas.height + 10) this.y = -10;
-
-                // Mouse repulsion / attraction
-                const dx = this.x - mouseX;
-                const dy = this.y - mouseY;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < MOUSE_RADIUS) {
-                    const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
-                    const angle = Math.atan2(dy, dx);
-                    // Push away from mouse
-                    this.x += Math.cos(angle) * force * 3;
-                    this.y += Math.sin(angle) * force * 3;
-                }
-
-                // Pulsing opacity
-                this.currentOpacity = this.opacity + Math.sin(time * this.pulseSpeed + this.pulseOffset) * 0.15;
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                if (this.isRed) {
-                    ctx.fillStyle = `rgba(220, 38, 38, ${this.currentOpacity})`;
-                    ctx.shadowColor = 'rgba(220, 38, 38, 0.4)';
-                    ctx.shadowBlur = this.size * 3;
-                } else {
-                    ctx.fillStyle = `rgba(255, 255, 255, ${this.currentOpacity})`;
-                    ctx.shadowColor = 'transparent';
-                    ctx.shadowBlur = 0;
-                }
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            }
-        }
-
-        // Create particles
-        function initParticles() {
-            const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
-            particles = [];
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
-            }
-        }
-        initParticles();
-        window.addEventListener('resize', initParticles);
-
-        // Draw connections between nearby particles near mouse
-        function drawConnections() {
-            for (let i = 0; i < particles.length; i++) {
-                const dxMouse = particles[i].x - mouseX;
-                const dyMouse = particles[i].y - mouseY;
-                const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-
-                if (distMouse < MOUSE_RADIUS * 2) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-
-                        if (dist < CONNECT_DISTANCE) {
-                            const opacity = (1 - dist / CONNECT_DISTANCE) * 0.15;
-                            ctx.beginPath();
-                            ctx.strokeStyle = `rgba(220, 38, 38, ${opacity})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.stroke();
-                        }
+            update(t) {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0) this.x = canvas.width;
+                else if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                else if (this.y > canvas.height) this.y = 0;
+                this.alpha = this.baseAlpha + Math.sin(t * 0.015 + this.phase) * 0.08;
+                if (!isMobile) {
+                    const dx = this.x - mouseX;
+                    const dy = this.y - mouseY;
+                    const d2 = dx * dx + dy * dy;
+                    const r2 = MOUSE_RADIUS * MOUSE_RADIUS;
+                    if (d2 < r2) {
+                        const d = Math.sqrt(d2);
+                        const f = (MOUSE_RADIUS - d) / MOUSE_RADIUS * 2.5;
+                        this.x += (dx / d) * f;
+                        this.y += (dy / d) * f;
                     }
                 }
             }
         }
 
-        let animationTime = 0;
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            animationTime++;
+        function initParticles() {
+            const area = canvas.width * canvas.height;
+            const count = isMobile ? Math.min(25, Math.floor(area / 35000)) : Math.min(55, Math.floor(area / 20000));
+            particles = [];
+            for (let i = 0; i < count; i++) particles.push(new Particle());
+        }
+        initParticles();
+        window.addEventListener('resize', initParticles);
 
-            particles.forEach(p => {
-                p.update(animationTime);
-                p.draw();
+        let fc = 0;
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            fc++;
+            const len = particles.length;
+
+            for (let i = 0; i < len; i++) {
+                const p = particles[i];
+                p.update(fc);
+                ctx.globalAlpha = p.alpha;
+                ctx.fillStyle = p.isRed ? '#dc2626' : '#fff';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, 6.28);
+                ctx.fill();
+                if (p.isRed) {
+                    ctx.globalAlpha = p.alpha * 0.25;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size * 3, 0, 6.28);
+                    ctx.fill();
+                }
+            }
+
+            if (!isMobile && mouseX > -999) {
+                ctx.globalAlpha = 1;
+                ctx.lineWidth = 0.4;
+                const mr2 = 90000;
+                for (let i = 0; i < len; i++) {
+                    const a = particles[i];
+                    const dxM = a.x - mouseX, dyM = a.y - mouseY;
+                    if (dxM * dxM + dyM * dyM > mr2) continue;
+                    for (let j = i + 1; j < len; j++) {
+                        const b = particles[j];
+                        const dx = a.x - b.x, dy = a.y - b.y;
+                        const d2 = dx * dx + dy * dy;
+                        if (d2 < CONNECT_DIST_SQ) {
+                            ctx.strokeStyle = 'rgba(220,38,38,' + ((1 - Math.sqrt(d2) / 100) * 0.12) + ')';
+                            ctx.beginPath();
+                            ctx.moveTo(a.x, a.y);
+                            ctx.lineTo(b.x, b.y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+            ctx.globalAlpha = 1;
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // ==================== CURSOR ====================
+        if (!isMobile) {
+            const dot = document.getElementById('cursorDot');
+            const ring = document.getElementById('cursorRing');
+            const glow = document.getElementById('mouseGlow');
+            let cx = 0, cy = 0, rx = 0, ry = 0;
+
+            document.addEventListener('mousemove', e => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                cx = e.clientX; cy = e.clientY;
+                dot.style.left = cx + 'px'; dot.style.top = cy + 'px';
+                glow.style.left = cx + 'px'; glow.style.top = cy + 'px';
             });
 
-            drawConnections();
-            requestAnimationFrame(animateParticles);
+            (function ringLoop() {
+                rx += (cx - rx) * 0.15;
+                ry += (cy - ry) * 0.15;
+                ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+                requestAnimationFrame(ringLoop);
+            })();
+
+            document.querySelectorAll('a, button, .btn, .faq-item, .nav-cta').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+
+            document.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
         }
-        animateParticles();
 
-        // ==================== CUSTOM CURSOR ====================
-        const cursorDot = document.getElementById('cursorDot');
-        const cursorRing = document.getElementById('cursorRing');
-        const mouseGlow = document.getElementById('mouseGlow');
-        let cursorX = 0, cursorY = 0;
-        let ringX = 0, ringY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursorX = e.clientX;
-            cursorY = e.clientY;
-            cursorDot.style.left = cursorX + 'px';
-            cursorDot.style.top = cursorY + 'px';
-            mouseGlow.style.left = cursorX + 'px';
-            mouseGlow.style.top = cursorY + 'px';
-        });
-
-        // Smooth ring follow
-        function animateCursorRing() {
-            ringX += (cursorX - ringX) * 0.15;
-            ringY += (cursorY - ringY) * 0.15;
-            cursorRing.style.left = ringX + 'px';
-            cursorRing.style.top = ringY + 'px';
-            requestAnimationFrame(animateCursorRing);
-        }
-        animateCursorRing();
-
-        // Hover effect for interactive elements
-        const hoverElements = document.querySelectorAll('a, button, .btn, .faq-item, .nav-cta');
-        hoverElements.forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-        });
-
-        // Reset mouse position when leaving window
-        document.addEventListener('mouseleave', () => {
-            mouseX = -1000;
-            mouseY = -1000;
-        });
-
-        // ==================== NAV SCROLL EFFECT ====================
-        const mainNav = document.getElementById('mainNav');
+        // ==================== NAV SCROLL ====================
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 80) {
-                mainNav.classList.add('scrolled');
-            } else {
-                mainNav.classList.remove('scrolled');
-            }
-        });
+            document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 80);
+        }, { passive: true });
 
         // ==================== SCROLL ANIMATIONS ====================
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -80px 0px'
-        };
+        const obs = new IntersectionObserver(entries => {
+            for (const e of entries) if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+        }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+        document.querySelectorAll('.scroll-fade, .scroll-fade-left, .scroll-fade-right, .section-header').forEach(el => obs.observe(el));
+
+        // ==================== TILT (desktop) ====================
+        if (!isMobile) {
+            document.querySelectorAll('.featured-card, .service-card, .benefit-card, .pricing-card').forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const r = card.getBoundingClientRect();
+                    const x = (e.clientX - r.left) / r.width - 0.5;
+                    const y = (e.clientY - r.top) / r.height - 0.5;
+                    card.style.transform = 'perspective(800px) rotateX(' + (y * -5) + 'deg) rotateY(' + (x * 5) + 'deg) translateY(-8px)';
+                });
+                card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+            });
+        }
+
+        // ==================== LAZY IFRAMES ====================
+        const iObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const f = e.target;
+                    if (f.dataset.src) { f.src = f.dataset.src; f.removeAttribute('data-src'); }
+                    iObs.unobserve(f);
                 }
             });
-        }, observerOptions);
+        }, { rootMargin: '300px' });
 
-        document.querySelectorAll('.scroll-fade, .scroll-fade-left, .scroll-fade-right, .section-header').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('iframe[data-src]').forEach(f => iObs.observe(f));
 
-        // ==================== TILT EFFECT ON CARDS ====================
-        const tiltCards = document.querySelectorAll('.tilt-card');
-        tiltCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / centerY * -4;
-                const rotateY = (x - centerX) / centerX * 4;
-                card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = '';
-            });
-        });
-
-        // ==================== VIDEO AUTOPLAY ON SCROLL ====================
-        const videoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const video = entry.target;
-                if (entry.isIntersecting) {
-                    video.play();
-                } else {
-                    video.pause();
-                }
-            });
-        }, { threshold: 0.5 });
-
-        document.querySelectorAll('.project-video video, .featured-video video').forEach(video => {
-            videoObserver.observe(video);
-        });
-
-        // ==================== FAQ ACCORDION ====================
+        // ==================== FAQ ====================
         document.querySelectorAll('.faq-item').forEach(item => {
             item.addEventListener('click', () => {
                 const wasActive = item.classList.contains('active');
                 document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-                if (!wasActive) {
-                    item.classList.add('active');
-                }
+                if (!wasActive) item.classList.add('active');
             });
         });
 
-        // ==================== SMOOTH SCROLLING ====================
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        // ==================== SMOOTH SCROLL ====================
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                const t = document.querySelector(this.getAttribute('href'));
+                if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
     </script>
